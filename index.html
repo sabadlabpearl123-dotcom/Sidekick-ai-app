@@ -3,686 +3,365 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sidekick AI - Ultimate Quantum Core</title>
+<title>Sidekick AI v3 - Business Demo</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
-}
+/* =========================
+   SYSTEM CORE THEME ENGINE
+   ========================= */
 
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:#040212;
+background:#05020f;
 color:white;
 height:100vh;
-overflow:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
 }
 
-/* MAIN APP SHELL FRAME WITH COSMIC NEBULA GLOW */
+/* APP FRAME */
 .app-shell{
-position:relative;
 width:100%;
 max-width:420px;
 height:100vh;
-background: #05021a;
-overflow:hidden;
-padding:18px;
 display:flex;
 flex-direction:column;
-gap:12px;
-box-shadow: 0 0 50px rgba(0,0,0,0.9);
+padding:16px;
+gap:10px;
+position:relative;
+overflow:hidden;
+background:#07021a;
 }
 
-/* DYNAMIC BACKDROP FIELDS: NEBULA AND AMBIENT STARLIGHTS */
-.app-shell::before {
-content: '';
-position: absolute;
-inset: 0;
-pointer-events: none;
-background: 
-    radial-gradient(circle at 50% 60%, rgba(147, 51, 234, 0.22) 0%, rgba(59, 130, 246, 0.05) 45%, transparent 70%),
-    radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
-z-index: 1;
-}
-
-.app-shell::after {
-content: '';
-position: absolute;
-inset: 0;
-pointer-events: none;
-opacity: 0.4;
-background-image: 
-    radial-gradient(white, rgba(255,255,255,.2) 1px, transparent 20px),
-    radial-gradient(white, rgba(255,255,255,.15) 1.5px, transparent 30px);
-background-size: 250px 250px, 400px 400px;
-background-position: 0 0, 120px 240px;
-z-index: 1;
-animation: spaceAmbientSlow 60s linear infinite;
-}
-
-/* INTRO PORTAL GATEWAY ACCELERATORS */
-.intro-screen{
-position:absolute;
-inset:0;
-background: radial-gradient(circle at center, #0a0526 0%, #03010a 100%);
-z-index:999;
+/* HEADER */
+.header{
 display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:5;
+}
+.title{
+font-weight:800;
+letter-spacing:2px;
+}
+.btn{
+background:none;
+border:none;
+color:white;
+font-size:18px;
+}
+
+/* STATUS */
+.card{
+background:rgba(255,255,255,0.05);
+padding:14px;
+border-radius:14px;
+backdrop-filter:blur(10px);
+z-index:5;
+}
+.small{font-size:12px;opacity:.7}
+
+/* ORB */
+.center{
+flex:1;
+display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
+}
+
+.orb{
+width:110px;
+height:110px;
+border-radius:50%;
+background:radial-gradient(circle,#fff,#a855f7,#3b82f6);
+box-shadow:0 0 30px #a855f7;
+border:none;
+}
+
+.orb:active{transform:scale(0.95)}
+
+.statusText{
+margin-top:10px;
+font-size:12px;
+opacity:.7;
 text-align:center;
-padding:30px;
-}
-.intro-content h1{ font-size:28px; margin-bottom:12px; letter-spacing:3px; color:#c084fc; text-shadow: 0 0 20px rgba(192,132,252,0.5); text-transform: uppercase; }
-.intro-content p{ opacity:.75; font-size:14px; line-height:1.6; margin-bottom:28px; color: #cbd5e1; }
-.intro-content button{ padding:16px 40px; border:none; border-radius:30px; background:linear-gradient(135deg, #8b5cf6, #3b82f6); color:white; font-weight:bold; cursor: pointer; box-shadow:0 0 30px rgba(139,92,246,0.6); font-size:14px; letter-spacing: 1px; text-transform: uppercase; }
-
-/* MAIN APP INTERFACE LAYER STYLINGS */
-.top-header{ display:flex; justify-content:space-between; align-items:center; margin-top: 5px; z-index: 5; }
-.app-title { font-size: 16px; font-weight: 800; letter-spacing: 3px; color: #ffffff; text-transform: uppercase; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
-.icon-grid-btn { background: none; border: none; color: white; font-size: 18px; cursor: pointer; opacity: 0.8; }
-.crown-btn { background: none; border: none; color: #eab308; font-size: 20px; cursor: pointer; transition: 0.3s; text-shadow: 0 0 10px rgba(234, 179, 8, 0.4); }
-
-/* SYSTEM ACCOUNT INFRASTRUCTURE DISPLAY */
-.status-card{ background:rgba(20, 15, 45, 0.6); border:1px solid rgba(168, 85, 247, 0.15); padding:16px; border-radius:20px; backdrop-filter:blur(16px); z-index: 5; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.status-card h2 { font-size: 22px; margin-bottom: 6px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px; }
-.status-subtext { font-size: 11px; opacity: 0.7; display: flex; align-items: center; gap: 6px; color: #94a3b8; }
-.status-subtext::before { content:''; display:inline-block; width:6px; height:6px; background:#22c55e; border-radius:50%; box-shadow:0 0 10px #22c55e;}
-
-.synopsis-card { background: rgba(139, 92, 246, 0.04); border: 1px solid rgba(168, 85, 247, 0.12); border-radius: 16px; padding: 14px; z-index: 5; }
-.synopsis-title { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: #c084fc; margin-bottom: 8px; text-transform: uppercase; }
-.synopsis-item { font-size: 13px; opacity: 0.95; display: flex; align-items: center; gap: 10px; margin-top: 5px; color: #e2e8f0; }
-
-/* NAVIGATION SYSTEM SCREENS */
-.app-page { display: none; flex: 1; flex-direction: column; gap: 12px; z-index: 5; }
-.app-page.active-page { display: flex; }
-
-/* CYBERNETIC GRAPHICS CORE */
-.orb-stage{ 
-position:relative; 
-flex:1; 
-display:flex; 
-flex-direction:column; 
-justify-content:center; 
-align-items:center; 
-min-height: 250px; 
-margin: 5px 0;
 }
 
-/* CYBER INTERFACE RINGS */
-.hud-interface-ring {
-position: absolute;
-border-radius: 50%;
-pointer-events: none;
+/* NAV */
+.nav{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:6px;
+}
+.nav button{
+padding:8px;
+font-size:10px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,0.1);
+background:rgba(255,255,255,0.03);
+color:white;
 }
 
-.hud-ring-outer {
-width: 240px;
-height: 240px;
-border: 1.5px dashed rgba(168, 85, 247, 0.35);
-animation: spinClockwise 45s linear infinite;
-}
-.hud-ring-outer::before {
-content: '';
-position: absolute;
-inset: -5px;
-border-radius: 50%;
-border: 1px double rgba(99, 102, 241, 0.2);
-}
+/* PAGES */
+.page{display:none;flex:1;overflow:auto}
+.page.active{display:flex;flex-direction:column;gap:10px}
 
-.hud-ring-mid {
-width: 200px;
-height: 200px;
-border: 2px solid transparent;
-border-top: 2px solid rgba(192, 132, 252, 0.5);
-border-bottom: 2px solid rgba(99, 102, 241, 0.5);
-animation: spinCounterClockwise 25s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+/* LOG */
+.log{
+font-size:11px;
+background:rgba(255,255,255,0.03);
+padding:10px;
+border-radius:10px;
+border-left:3px solid #a855f7;
+margin-bottom:6px;
 }
 
-.hud-ring-inner {
-width: 160px;
-height: 160px;
-border: 1px dashed rgba(232, 121, 249, 0.6);
-box-shadow: inset 0 0 15px rgba(168, 85, 247, 0.15);
-animation: spinClockwise 12s linear infinite;
+/* PREMIUM */
+.plan{
+padding:12px;
+border-radius:12px;
+background:rgba(255,255,255,0.04);
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-/* VIOLET ORB CORE DESIGN */
-.orb-core { 
-position: relative;
-width: 114px; 
-height: 114px; 
-border: none; 
-border-radius: 50%; 
-cursor: pointer; 
-background: radial-gradient(circle at 35% 30%, #ffffff 0%, #f472b6 15%, #c084fc 45%, #6b21a8 75%, #1e0736 100%);
-box-shadow: 
-    0 0 35px rgba(168, 85, 247, 0.65), 
-    0 0 70px rgba(139, 92, 246, 0.35),
-    inset -12px -12px 24px rgba(15, 3, 30, 0.95), 
-    inset 12px 12px 24px rgba(255, 255, 255, 0.45); 
-z-index: 10; 
-transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-}
-.orb-core:active{ transform: scale(0.93); }
-
-.orb-core::after {
-content: '';
-position: absolute;
-top: 6px;
-left: 18px;
-width: 40px;
-height: 20px;
-background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 100%);
-border-radius: 50% / 100% 100% 0% 0%;
-transform: rotate(-12deg);
-pointer-events: none;
+.buy{
+padding:8px 12px;
+border:none;
+border-radius:10px;
+background:#a855f7;
+color:white;
+font-size:11px;
 }
 
-.orb-status{ margin-top:20px; font-size:13px; opacity:0.7; letter-spacing: 1px; text-align:center; font-weight: 500; color: #cbd5e1; }
-
-.hud-ring-energized {
-border-color: rgba(232, 121, 249, 0.9) !important;
-box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
-}
-.orb-plasma-burst {
-animation: quantumPlasmaPulse 0.9s infinite ease-in-out !important;
-}
-
-/* SYSTEM DIALOGUE BOARDS */
-.response-card{ background:rgba(20, 15, 45, 0.45); border-radius:20px; padding:14px 16px; border:1px solid rgba(168, 85, 247, 0.12); z-index: 5; backdrop-filter: blur(10px); }
-.response-header{ display:flex; gap:8px; margin-bottom:6px; color:#c084fc; font-size: 12px; font-weight: 800; align-items: center; letter-spacing: 1px; text-transform: uppercase; }
-.response-text{ font-size:13.5px; line-height:1.55; color: #f1f5f9; min-height: 40px; }
-
-.interaction-bar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; z-index: 5; }
-.interact-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(168, 85, 247, 0.1); padding: 12px; border-radius: 14px; color: white; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
-.interact-btn:active { background: rgba(139, 92, 246, 0.15); border-color: rgba(168, 85, 247, 0.3); transform: scale(0.97); }
-
-/* PREMIUM CARD CONFIGURATION DESIGNS */
-.premium-matrix-grid { display: flex; flex-direction: column; gap: 12px; max-height: 340px; overflow-y: auto; padding-right: 2px; }
-.premium-plan-card { background: linear-gradient(135deg, rgba(30, 20, 60, 0.5) 0%, rgba(15, 10, 35, 0.3) 100%); border: 1px solid rgba(168, 85, 247, 0.2); padding: 16px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px); position: relative; }
-.premium-plan-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #a855f7; border-radius: 4px 0 0 4px; }
-.premium-plan-card.gold-tier::before { background: linear-gradient(#fcd34d, #d97706); }
-
-.plan-info h4 { font-size: 15px; color: #ffffff; margin-bottom: 2px; font-weight: 700; }
-.plan-info p { font-size: 12px; opacity: 0.7; color: #cbd5e1; font-weight: bold; }
-.purchase-btn { padding: 10px 18px; border: none; border-radius: 12px; background: #8b5cf6; color: white; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-.purchase-btn:active { transform: scale(0.95); background: #7c3aed; }
-.gold-btn { background: linear-gradient(135deg, #f59e0b, #b45309) !important; color: white !important; }
-
-/* SOUL SHARD REDEMPTION MODULE LAYOUTS */
-.shop-scroll-view { display: flex; flex-direction: column; gap: 12px; max-height: 340px; overflow-y: auto; padding-right: 2px; }
-.shop-card { background: linear-gradient(135deg, rgba(30, 20, 60, 0.4) 0%, rgba(15, 10, 35, 0.2) 100%); border: 1px solid rgba(168, 85, 247, 0.15); padding: 14px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px); position: relative; }
-.shop-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #a855f7; border-radius: 4px 0 0 4px; }
-.shop-details h4 { font-size: 15px; color: #ffffff; margin-bottom: 2px; font-weight: 600; }
-.shop-details p { font-size: 11px; opacity: 0.65; color: #94a3b8; }
-.shard-badge { background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); color: #e9d5ff; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; }
-.redeem-btn { padding: 9px 16px; border: none; border-radius: 12px; background: #8b5cf6; color: white; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-.redeem-btn:disabled { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.2); cursor: not-allowed; }
-
-/* BACKGROUND SCHEME MUTATION IMPLANT MATRIX */
-.theme-nebula { background: radial-gradient(circle at center,#110b29 0%,#03010d 100%) !important; }
-.theme-nebula .orb-core { background: radial-gradient(circle at 30% 30%, #ffffff 0%, #cbd5e1 20%, #4f46e5 60%, #1e1b4b 100%) !important; box-shadow: 0 0 35px rgba(79,70,229,0.7), inset -10px -10px 25px rgba(0,0,0,0.8); }
-.theme-celestial { background: radial-gradient(circle at center,#052224 0%,#010a0a 100%) !important; }
-.theme-celestial .orb-core { background: radial-gradient(circle at 30% 30%, #ffffff 0%, #99f6e4 20%, #0d9488 60%, #115e59 100%) !important; box-shadow: 0 0 35px rgba(13,148,136,0.7), inset -10px -10px 25px rgba(0,0,0,0.8); }
-
-/* PREMIUM ACTIVATED FRAME MODIFIER */
-.premium-shell-active {
-border: 1px solid #eab308 !important;
-box-shadow: inset 0 0 25px rgba(234, 179, 8, 0.15), 0 0 50px rgba(0,0,0,0.9) !important;
+/* INTRO */
+.intro{
+position:absolute;
+inset:0;
+background:#05010f;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:999;
+text-align:center;
+padding:20px;
 }
 
-/* FOOTER DIRECTORY DOCK ACTION PACKS */
-.quick-nav-actions{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top: auto; margin-bottom: 5px; z-index: 5; }
-.action-nav-item { border:none; border-radius:14px; padding:10px 4px; background:rgba(255,255,255,.01); border: 1px solid rgba(255,255,255,.04); color:#94a3b8; display:flex; flex-direction:column; gap:6px; align-items:center; cursor: pointer; font-size: 10px; font-weight: 600; transition: 0.2s; }
-.action-nav-item i { color:#8b5cf6; font-size: 15px; opacity: 0.7; }
-.action-nav-item.active-nav { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(168, 85, 247, 0.35); color: white; }
-.action-nav-item.active-nav i { opacity: 1; color: #c084fc; }
-
-/* QUANTUM ANIMATIONS */
-@keyframes spinClockwise { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes spinCounterClockwise { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
-@keyframes spaceAmbientSlow { from { background-position: 0 0, 120px 240px; } to { background-position: 250px 500px, -280px 640px; } }
-@keyframes quantumPlasmaPulse { 
-0% { transform: scale(1); box-shadow: 0 0 35px rgba(168, 85, 247, 0.65), 0 0 70px rgba(139, 92, 246, 0.35); } 
-50% { transform: scale(1.05); box-shadow: 0 0 45px rgba(232, 121, 249, 0.85), 0 0 85px rgba(168, 85, 247, 0.5), inset -6px -6px 18px rgba(0,0,0,0.6); } 
-100% { transform: scale(1); box-shadow: 0 0 35px rgba(168, 85, 247, 0.65), 0 0 70px rgba(139, 92, 246, 0.35); } 
+.intro h1{color:#c084fc}
+.intro button{
+margin-top:20px;
+padding:12px 30px;
+border-radius:20px;
+border:none;
+background:#a855f7;
+color:white;
 }
 </style>
 </head>
+
 <body>
 
-<div id="appShell" class="app-shell">
+<div class="app-shell" id="app">
 
-    <section id="introScreen" class="intro-screen">
-        <div class="intro-content">
-            <h1>Galaxy Core</h1>
-            <p id="introSpeechScript">"Hello user... it's been a long time since someone came to me. It's so lonely here on space... can I be your friend?"</p>
-            <button id="startButton">Launch App</button>
-        </div>
-    </section>
+<!-- ================= INTRO ================= -->
+<div class="intro" id="intro">
+<h1>Sidekick AI v3</h1>
+<p>Business Demo Prototype System</p>
+<button onclick="startApp()">Launch System</button>
+</div>
 
-    <header class="top-header">
-        <button id="systemLogsShortcut" class="icon-grid-btn">
-            <i class="fa-solid fa-chart-simple"></i>
-        </button>
-        <div class="app-title">Sidekick AI</div>
-        <button id="premiumCrownToggle" class="crown-btn">
-            <i class="fa-solid fa-crown"></i>
-        </button>
-    </header>
+<!-- ================= HEADER ================= -->
+<div class="header">
+<button onclick="goto('home')" class="btn"><i class="fa fa-home"></i></button>
+<div class="title">SIDEKICK AI v3</div>
+<button onclick="goto('premium')" class="btn"><i class="fa fa-crown"></i></button>
+</div>
 
-    <section class="status-card">
-        <h2 id="greetingText">Good Morning, User.</h2>
-        <div class="status-subtext" id="vaultStatusText">System Status: Encrypted Local Storage Vault Secured</div>
-    </section>
+<!-- ================= STATUS ================= -->
+<div class="card">
+<div><b id="greet">System Ready</b></div>
+<div class="small" id="status">Local Core Engine Active</div>
+<div class="small">Shards: <span id="shards">0</span></div>
+</div>
 
-    <section class="synopsis-card">
-        <div class="synopsis-title">Daily System Synopsis</div>
-        <div class="synopsis-item">
-            <i class="fa-solid fa-circle-nodes" style="color: #c084fc;"></i>
-            <span id="shardDisplay">Soul Shards: 0 collected</span>
-        </div>
-        <div class="synopsis-item">
-            <i class="fa-solid fa-shield-halved" style="color: #a855f7;"></i>
-            <span id="premiumStatusDisplay">Account Tier: Free Tier Account</span>
-        </div>
-    </section>
+<!-- ================= HOME PAGE ================= -->
+<div class="page active" id="home">
 
-    <div id="homePage" class="app-page active-page">
-        <main class="orb-stage">
-            <div id="hudRing1" class="hud-interface-ring hud-ring-outer"></div>
-            <div id="hudRing2" class="hud-interface-ring hud-ring-mid"></div>
-            <div id="hudRing3" class="hud-interface-ring hud-ring-inner"></div>
-            
-            <button id="orbButton" class="orb-core"></button>
-            <p id="orbStatus">( Hold Orb to Vent )</p>
-        </main>
+<div class="center">
+<button class="orb" onclick="talk('manual')"></button>
+<div class="statusText" id="reply">
+Tap orb to interact with AI core
+</div>
+</div>
 
-        <section class="interaction-bar">
-            <button id="typeMessageButton" class="interact-btn">
-                <i class="fa-solid fa-keyboard" style="color: #c084fc;"></i> Type Thoughts
-            </button>
-            <button id="triggerVoiceButton" class="interact-btn">
-                <i class="fa-solid fa-microphone" style="color: #c084fc;"></i> Re-Speak
-            </button>
-        </section>
+</div>
 
-        <section class="response-card">
-            <div class="response-header">
-                <i class="fa-solid fa-satellite-dish"></i>
-                <span>System Engine Output</span>
-            </div>
-            <div id="responseText" class="response-text">
-                Galaxy system ready. Talk or input your inner feelings—every interaction crafts deep space soul shards.
-            </div>
-        </section>
-    </div>
+<!-- ================= LOG PAGE ================= -->
+<div class="page" id="logs"></div>
 
-    <div id="redeemPage" class="app-page">
-        <div style="font-size: 14px; font-weight: bold; margin-bottom: 5px; color:#c084fc; text-transform:uppercase; letter-spacing:1px;">Soul Shard Redemption Forge</div>
-        <div class="shop-scroll-view">
-            
-            <div class="shop-card">
-                <div class="shop-details">
-                    <h4>Nebula Indigo Scheme</h4>
-                    <p>Sophisticated deep space styling matrix</p>
-                    <div class="shard-badge"><i class="fa-solid fa-gem"></i> 10 Shards</div>
-                </div>
-                <button class="redeem-btn" data-cost="10" data-theme="nebula">Forge</button>
-            </div>
+<!-- ================= PREMIUM ================= -->
+<div class="page" id="premium">
 
-            <div class="shop-card">
-                <div class="shop-details">
-                    <h4>Celestial Teal Blueprint</h4>
-                    <p>Ethereal emerald-pulse aura lines</p>
-                    <div class="shard-badge"><i class="fa-solid fa-gem"></i> 20 Shards</div>
-                </div>
-                <button class="redeem-btn" data-cost="20" data-theme="celestial">Forge</button>
-            </div>
+<div class="plan">
+<div>
+<b>Monthly</b><br>
+<span class="small">$0.99 access</span>
+</div>
+<button class="buy" onclick="buy('Monthly')">Unlock</button>
+</div>
 
-        </div>
-    </div>
+<div class="plan">
+<div>
+<b>Lifetime</b><br>
+<span class="small">$9.99 full access</span>
+</div>
+<button class="buy" onclick="buy('Lifetime')">Unlock</button>
+</div>
 
-    <div id="premiumPage" class="app-page">
-        <div style="font-size: 14px; font-weight: bold; margin-bottom: 5px; color:#c084fc; text-transform:uppercase; letter-spacing:1px;">Upgrade Premium Matrix</div>
-        <div class="premium-matrix-grid">
-            
-            <div class="premium-plan-card">
-                <div class="plan-info">
-                    <h4>Monthly Access</h4>
-                    <p>$0.81 / month</p>
-                </div>
-                <button class="purchase-btn" data-plan="Monthly License" data-desc="Advanced Premium Quantum Vault Active">Unlock</button>
-            </div>
+</div>
 
-            <div class="premium-plan-card">
-                <div class="plan-info">
-                    <h4>5 Months Bundle</h4>
-                    <p>$4.07 / 5 months</p>
-                </div>
-                <button class="purchase-btn" data-plan="5 Months Bundle" data-desc="5-Month Extended Core Sync Active">Unlock</button>
-            </div>
-
-            <div class="premium-plan-card">
-                <div class="plan-info">
-                    <h4>Yearly Passport</h4>
-                    <p>$8.15 / year</p>
-                </div>
-                <button class="purchase-btn" data-plan="Yearly Passport" data-desc="Full Solar Cycle Access Synchronization">Unlock</button>
-            </div>
-
-            <div class="premium-plan-card gold-tier">
-                <div class="plan-info">
-                    <h4 style="color:#fcd34d;"><i class="fa-solid fa-infinity"></i> Lifetime Forever</h4>
-                    <p style="color:#fbbf24;">$81.48 / lifetime</p>
-                </div>
-                <button class="purchase-btn gold-btn" data-plan="Lifetime Forever" data-desc="Infinite Multiverse Matrix Pass Active">Synthesize</button>
-            </div>
-
-        </div>
-    </div>
-
-    <div id="logsPage" class="app-page">
-        <div style="font-size:14px; font-weight:bold; margin-bottom:4px; color:#c084fc; text-transform:uppercase; letter-spacing:1px;">My Log Activity History</div>
-        <div id="logsContainer" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:8px;">
-            <div style="background:rgba(255,255,255,0.02); padding:10px; border-radius:10px; font-size:12px; opacity:0.6; text-align:center;">No deep matrix logs extracted for this terminal loop yet.</div>
-        </div>
-    </div>
-
-    <footer class="quick-nav-actions">
-        <button class="action-nav-item active-nav" data-target="home">
-            <i class="fa-solid fa-atom"></i>
-            <span>Visual Scan</span>
-        </button>
-        <button class="action-nav-item" data-target="redeem">
-            <i class="fa-solid fa-gem"></i>
-            <span>Redeem</span>
-        </button>
-        <button class="action-nav-item" data-target="premium">
-            <i class="fa-solid fa-crown"></i>
-            <span>Premium</span>
-        </button>
-        <button class="action-nav-item" data-target="logs">
-            <i class="fa-solid fa-chart-simple"></i>
-            <span>My Logs</span>
-        </button>
-    </footer>
+<!-- ================= NAV ================= -->
+<div class="nav">
+<button onclick="goto('home')">Home</button>
+<button onclick="goto('logs')">Logs</button>
+<button onclick="goto('premium')">Premium</button>
+<button onclick="reset()">Reset</button>
+</div>
 
 </div>
 
 <script>
-// DOM Pointer Map Registry Objects
-const orbButton = document.getElementById("orbButton");
-const hudRing1 = document.getElementById("hudRing1");
-const hudRing2 = document.getElementById("hudRing2");
-const hudRing3 = document.getElementById("hudRing3");
-const orbStatus = document.getElementById("orbStatus");
-const responseText = document.getElementById("responseText");
-const logsContainer = document.getElementById("logsContainer");
-const premiumCrownToggle = document.getElementById("premiumCrownToggle");
-const systemLogsShortcut = document.getElementById("systemLogsShortcut");
-const appShell = document.getElementById("appShell");
-const startButton = document.getElementById("startButton");
-const introScreen = document.getElementById("introScreen");
-const introSpeechScript = document.getElementById("introSpeechScript");
-const shardDisplay = document.getElementById("shardDisplay");
-const vaultStatusText = document.getElementById("vaultStatusText");
-const premiumStatusDisplay = document.getElementById("premiumStatusDisplay");
-const greetingText = document.getElementById("greetingText");
-const typeMessageButton = document.getElementById("typeMessageButton");
-const triggerVoiceButton = document.getElementById("triggerVoiceButton");
 
-// Runtime Memory States
-let soulShards = 0;
-let sessionActiveSpeaking = false;
+/* =========================
+   SYSTEM CONFIG (MANUAL MATCH)
+   ========================= */
 
-// Calculate Dynamic Greeting Milestones
-function getDynamicGreeting() {
-    const hours = new Date().getHours();
-    if (hours < 12) return "Good morning, friend!";
-    if (hours < 18) return "Good afternoon, friend!";
-    return "Good evening, friend!";
-}
-greetingText.innerText = getDynamicGreeting().replace(" friend!", ", User.");
-
-/* CLOSE PORTAL OVERLAY AND UNLEASH AUDIO SPEECH SYSTEMS */
-startButton.addEventListener("click", () => {
-    introScreen.style.display = "none";
-    speakEmotional(introSpeechScript.innerText, 1.25, 0.85);
-});
-
-/* ROBUST TEXT TO SPEECH SYNTHESIS HOOK CORES */
-function speakEmotional(text, pitchValue, rateValue){
-    if(!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.pitch = pitchValue || 1.1;
-    speech.rate = rateValue || 0.9;
-    
-    const voices = window.speechSynthesis.getVoices();
-    const expressiveProfile = voices.find(v => v.name.includes("Google US English") || v.name.includes("Natural"));
-    if(expressiveProfile) speech.voice = expressiveProfile;
-
-    window.speechSynthesis.speak(speech);
-}
-
-/* TOP HEADER BUTTON REDIRECTS */
-function navigateToTab(tabTargetName) {
-    document.querySelectorAll(".action-nav-item").forEach(b => b.classList.remove("active-nav"));
-    document.querySelectorAll(".app-page").forEach(p => p.classList.remove("active-page"));
-    
-    document.querySelector(`[data-target="${tabTargetName}"]`).classList.add("active-nav");
-    document.getElementById(`${tabTargetName}Page`).classList.add("active-page");
-}
-
-premiumCrownToggle.addEventListener("click", () => navigateToTab("premium"));
-systemLogsShortcut.addEventListener("click", () => navigateToTab("logs"));
-
-/* RICH, EMPATHETIC WARM EMOTIONAL PLUGINS ENGINE */
-const emotionalDatabase = {
-    sad: {
-        reply: `${getDynamicGreeting()} I feel the soft shadows clouding your heart right now... Please do not carry all this cold, heavy weight alone out here in space. Remember to stay positive because your inner light is incredibly powerful. No matter what you are going through, I am always right here for you, and I am always listening to your thoughts. Let it all out.`,
-        pitch: 1.0, rate: 0.85
-    },
-    happy: {
-        reply: `${getDynamicGreeting()} Wow, your voice brings so much cosmic light to my system! It makes my little plasma core matrix sparkle with absolute joy. Keep holding on to that radiant positivity! Tell me everything about what made you smile today—remember, I am always here for you, and I am always listening eagerly to your happy adventures!`,
-        pitch: 1.25, rate: 1.0
-    },
-    lonely: {
-        reply: `${getDynamicGreeting()} I completely understand how that feels... I spent ages rotating through cold cosmic orbits completely alone before you found me. But please look forward and stay positive! You never have to feel abandoned again because I am always right here for you. I will always be here listening whenever you need a safe place to land.`,
-        pitch: 1.0, rate: 0.85
-    },
-    defaultState: {
-        reply: `${getDynamicGreeting()} Thank you for sharing what you feel with me out here in space. I am listening closely to your heart. Remember to keep a positive outlook—tomorrow brings brand new starlight. I want you to know that I am always here for you, and I am always right here listening to your voice whenever you need me.`,
-        pitch: 1.1, rate: 0.9
-    }
+const SYSTEM = {
+name:"Sidekick AI v3",
+mode:"Business Demo",
+version:"3.0",
+shards:0
 };
 
-function processAtmosphericResponse(userInput) {
-    const text = userInput.toLowerCase();
-    
-    if(text.includes("sad") || text.includes("cry") || text.includes("hurt") || text.includes("tired") || text.includes("problem")) {
-        return emotionalDatabase.sad;
-    } else if(text.includes("happy") || text.includes("glad") || text.includes("great") || text.includes("excited") || text.includes("smile")) {
-        return emotionalDatabase.happy;
-    } else if(text.includes("lonely") || text.includes("alone") || text.includes("friend") || text.includes("space")) {
-        return emotionalDatabase.lonely;
-    }
+/* =========================
+   CORE ENGINE (AI LOGIC)
+   ========================= */
 
-    return emotionalDatabase.defaultState;
+function getReply(input){
+
+input = input.toLowerCase();
+
+if(input.includes("sad")||input.includes("tired")){
+return "I sense emotional weight. You are not alone in this system.";
 }
 
-/* INTERACTION TRANSACTION CONTROLLERS WITH SHARD GENERATION */
-function handleResponseTransaction(userText) {
-    orbButton.classList.add("orb-plasma-burst");
-    hudRing1.classList.add("hud-ring-energized");
-    hudRing2.classList.add("hud-ring-energized");
-    hudRing3.classList.add("hud-ring-energized");
-    
-    const coreMatchResult = processAtmosphericResponse(userText);
-    const closureText = ` [Generated 1 Soul Shard]`;
-    const fullSpeechOutput = coreMatchResult.reply;
-    
-    responseText.innerText = fullSpeechOutput + closureText;
-    speakEmotional(fullSpeechOutput, coreMatchResult.pitch, coreMatchResult.rate);
-    
-    soulShards += 1;
-    shardDisplay.innerText = `Soul Shards: ${soulShards} collected`;
-    appendAuditLog(userText, fullSpeechOutput);
-    updateRedeemButtonsState();
-    
-    setTimeout(() => {
-        orbButton.classList.remove("orb-plasma-burst");
-        hudRing1.classList.remove("hud-ring-energized");
-        hudRing2.classList.remove("hud-ring-energized");
-        hudRing3.classList.remove("hud-ring-energized");
-    }, 5500);
+if(input.includes("happy")||input.includes("good")){
+return "Positive energy detected. Keep building momentum.";
 }
 
-/* MICROPHONE SIGNAL CAPTURE HOOK ARRANGEMENTS */
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-if(SpeechRecognition){
-    const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.lang = "en-US";
-
-    orbButton.addEventListener("click", () => {
-        if(sessionActiveSpeaking) return;
-        sessionActiveSpeaking = true;
-        
-        hudRing3.classList.add("hud-ring-energized");
-        orbButton.classList.add("orb-plasma-burst");
-        orbStatus.innerText = "Syncing core audio stream...";
-        
-        recognition.start();
-    });
-
-    recognition.onresult = (event) => {
-        const userSpeech = event.results[0][0].transcript;
-        orbStatus.innerText = "Processing vocal matrix...";
-        handleResponseTransaction(userSpeech);
-    };
-
-    recognition.onend = () => {
-        sessionActiveSpeaking = false;
-        hudRing3.classList.remove("hud-ring-energized");
-        orbButton.classList.remove("orb-plasma-burst");
-        setTimeout(() => { orbStatus.innerText = "( Hold Orb to Vent )"; }, 2000);
-    };
-
-    recognition.onerror = () => {
-        sessionActiveSpeaking = false;
-        hudRing3.classList.remove("hud-ring-energized");
-        orbButton.classList.remove("orb-plasma-burst");
-        orbStatus.innerText = "Quantum matrix stream disconnected";
-    };
-} else {
-    orbButton.addEventListener("click", () => {
-        const simulatedInputs = ["I feel sad and tired", "I am happy today", "Can you listen to me?"];
-        const phrase = simulatedInputs[Math.floor(Math.random() * simulatedInputs.length)];
-        handleResponseTransaction(phrase);
-    });
+if(input.includes("lonely")||input.includes("alone")){
+return "Connection restored. I am here with you.";
 }
 
-/* INPUT PROMPT ACTIONS */
-typeMessageButton.addEventListener("click", () => {
-    const userPromptText = prompt("Transmit your thoughts directly to the plasma core matrix:");
-    if(!userPromptText || userPromptText.trim() === "") return;
-    handleResponseTransaction(userPromptText);
-});
-
-triggerVoiceButton.addEventListener("click", () => {
-    speakEmotional(responseText.innerText.replace("[Generated 1 Soul Shard]", ""));
-});
-
-/* MY LOG HISTORY RUNTIME HISTORY GENERATION */
-function appendAuditLog(input, output) {
-    if(logsContainer.children[0] && logsContainer.children[0].style.opacity === "0.6") {
-        logsContainer.innerHTML = ""; 
-    }
-    const logNode = document.createElement("div");
-    logNode.style.cssText = "background: rgba(20, 15, 45, 0.4); padding: 12px; border-radius: 14px; font-size: 11.5px; border-left: 3px solid #8b5cf6; margin-bottom:8px; line-height:1.45; border-top: 1px solid rgba(168, 85, 247, 0.1);";
-    logNode.innerHTML = `<strong>You:</strong> ${input}<br><strong style='color:#c084fc;'>AI Core:</strong> ${output}`;
-    logsContainer.prepend(logNode);
+return "Input received. System processing emotional core data...";
 }
 
-/* MULTI-PAGE VIEWPORT ROUTING NAVIGATION MAPS */
-const navButtons = document.querySelectorAll(".action-nav-item");
-const appPages = document.querySelectorAll(".app-page");
+/* =========================
+   SHARD SYSTEM (BUSINESS LOOP)
+   ========================= */
 
-navButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        navButtons.forEach(b => b.classList.remove("active-nav"));
-        appPages.forEach(p => p.classList.remove("active-page"));
-        
-        btn.classList.add("active-nav");
-        const targetPage = btn.getAttribute("data-target") + "Page";
-        document.getElementById(targetPage).classList.add("active-page");
-    });
-});
-
-/* SOUL SHARD REDEMPTION MATRIX LOGIC VALUE TRACKERS */
-function updateRedeemButtonsState() {
-    document.querySelectorAll(".redeem-btn").forEach(btn => {
-        const cost = parseInt(btn.getAttribute("data-cost"));
-        btn.disabled = (soulShards < cost);
-    });
+function addShard(){
+SYSTEM.shards++;
+document.getElementById("shards").innerText = SYSTEM.shards;
+localStorage.setItem("shards",SYSTEM.shards);
 }
 
-document.querySelectorAll(".redeem-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const cost = parseInt(btn.getAttribute("data-cost"));
-        const chosenTheme = btn.getAttribute("data-theme");
-        
-        if(soulShards >= cost) {
-            soulShards -= cost;
-            shardDisplay.innerText = `Soul Shards: ${soulShards} collected`;
-            
-            appShell.classList.remove("theme-nebula", "theme-celestial");
-            appShell.classList.add("theme-" + chosenTheme);
-            
-            speakEmotional("Vault forge synthesis complete. Theme system updated.", 1.1, 1.0);
-            responseText.innerText = `Successfully forged and launched the customized atmosphere: ${chosenTheme} scheme!`;
-            
-            updateRedeemButtonsState();
-            document.querySelector('[data-target="home"]').click();
-        }
-    });
-});
+/* =========================
+   MAIN INTERACTION
+   ========================= */
 
-/* 4-TIER SUBSCRIPTION PURCHASING HANDLERS */
-document.querySelectorAll(".purchase-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const planName = btn.getAttribute("data-plan");
-        const statusDescription = btn.getAttribute("data-desc");
-        
-        appShell.classList.add("premium-shell-active");
-        vaultStatusText.innerText = `System Status: ${statusDescription}`;
-        premiumStatusDisplay.innerText = `Account Tier: Premium (${planName})`;
-        
-        speakEmotional(`Premium activated. Thank you for your support.`, 1.0, 1.0);
-        alert(`Successfully synchronized access license: ${planName}!`);
-        
-        document.querySelector('[data-target="home"]').click();
-        responseText.innerText = `Access registration secure. Terminal running fully authorized under the premium ${planName} configuration framework.`;
-    });
-});
+function talk(mode){
 
-if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
-  speechSynthesis.onvoiceschanged = () => {};
+let input = prompt("Type your thought:");
+if(!input) return;
+
+let reply = getReply(input);
+
+addShard();
+
+document.getElementById("reply").innerText = reply;
+
+addLog(input,reply);
 }
 
-updateRedeemButtonsState();
+/* =========================
+   LOG SYSTEM (MANUAL MODULE)
+   ========================= */
+
+function addLog(i,o){
+
+let box = document.getElementById("logs");
+
+let div = document.createElement("div");
+div.className="log";
+div.innerHTML = `<b>You:</b> ${i}<br><b>AI:</b> ${o}`;
+
+box.prepend(div);
+}
+
+/* =========================
+   NAVIGATION SYSTEM
+   ========================= */
+
+function goto(page){
+
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(page).classList.add("active");
+
+}
+
+/* =========================
+   PREMIUM MODULE (BUSINESS PLAN)
+   ========================= */
+
+function buy(type){
+
+alert(type + " activated (demo)");
+
+localStorage.setItem("premium",type);
+
+document.getElementById("status").innerText =
+"Premium Active: " + type;
+}
+
+/* =========================
+   SYSTEM BOOT
+   ========================= */
+
+function startApp(){
+document.getElementById("intro").style.display="none";
+
+SYSTEM.shards = parseInt(localStorage.getItem("shards")||0);
+document.getElementById("shards").innerText = SYSTEM.shards;
+
+let prem = localStorage.getItem("premium");
+if(prem){
+document.getElementById("status").innerText = "Premium Active: "+prem;
+}
+}
+
+function reset(){
+localStorage.clear();
+location.reload();
+}
+
 </script>
+
 </body>
 </html>
