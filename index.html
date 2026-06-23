@@ -32,6 +32,7 @@
         /* LOGS PANEL */
         .logs-overlay { position: absolute; bottom: 95px; left: 24px; right: 24px; height: 230px; background: rgba(7, 3, 15, 0.96); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 18px; z-index: 40; transform: translateY(160%); transition: transform 0.4s; backdrop-filter: blur(15px); }
         .overlay-active { transform: translateY(0); }
+        .log-entry { font-size: 12px; color: #cbd5e1; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 4px; }
 
         /* NAVIGATION DOCK */
         .navigation-dock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; z-index: 10; }
@@ -63,11 +64,12 @@
                 <span style="color:#c084fc;">[Resonance Ledger]</span>
                 <button onclick="document.getElementById('archive-logs').classList.remove('overlay-active')" style="background:none; border:none; color:#a78bfa; cursor:pointer;">Dismiss</button>
             </div>
+            <div id="log-container"></div>
         </div>
 
         <div class="navigation-dock">
             <button class="action-button" onclick="alert('Scanning environment...')">Scan</button>
-            <button class="action-button" onclick="alert('Opening input node...')">Type</button>
+            <button class="action-button" onclick="handleTextTyping()">Type</button>
             <button class="action-button" onclick="alert('Redeeming shards...')">Redeem</button>
             <button class="action-button" onclick="document.getElementById('archive-logs').classList.add('overlay-active')">Vault</button>
         </div>
@@ -77,6 +79,7 @@
         let isOrbListening = false;
         const interactionOrb = document.getElementById('interaction-orb');
         const statePrompt = document.getElementById('state-prompt');
+        const logContainer = document.getElementById('log-container');
 
         function triggerOrbProcessingCycle() {
             isOrbListening = !isOrbListening;
@@ -87,6 +90,17 @@
                 interactionOrb.classList.remove('orb-state-listening');
                 statePrompt.innerText = "Processing...";
                 setTimeout(() => { statePrompt.innerText = "Tap Orb to Speak"; }, 1000);
+            }
+        }
+
+        function handleTextTyping() {
+            const userInput = prompt("Enter your message:");
+            if (userInput) {
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                entry.innerText = "> " + userInput;
+                logContainer.prepend(entry);
+                alert("Message added to Vault.");
             }
         }
     </script>
