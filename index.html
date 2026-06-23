@@ -179,7 +179,7 @@
             align-items: center;
         }
         
-        /* PREMIUM CROWN DISPLAY STYLING */
+        /* PREMIUM CROWN DISPLAY STYLING (WITH POINTER-EVENTS FIXED) */
         .premium-crown {
             position: absolute;
             top: 20%;
@@ -187,6 +187,7 @@
             color: #fbbf24;
             text-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 2px 4px rgba(0,0,0,0.5);
             z-index: 20;
+            pointer-events: none;
             animation: floatingCrown 4s infinite ease-in-out;
         }
 
@@ -469,7 +470,7 @@
         let isOrbListening = false;
         let speechPipelineAuthenticated = false;
 
-        // FIXED INTENT SYSTEM NODES (GREETING & COMFORT PATHWAYS)
+        // FIXED INTENT SYSTEM NODES (GREETING, COMFORT, & ATTENTIVE PATHWAYS)
         const emotionalIntentNodes = {
             comfort: {
                 tone: "Comforting",
@@ -486,6 +487,14 @@
                 glow: "0 0 50px rgba(234, 179, 8, 0.7)",
                 rate: 1.0,
                 pitch: 1.15
+            },
+            listening: {
+                tone: "Attentive",
+                text: "Just say what you want, I'm here to listen.",
+                hex: "radial-gradient(circle at 35% 25%, #ffffff 0%, #67e8f9 20%, #0891b2 50%, #164e63 80%, #020005 100%)",
+                glow: "0 0 50px rgba(6, 182, 212, 0.7)",
+                rate: 0.9,
+                pitch: 1.05
             }
         };
 
@@ -518,7 +527,7 @@
                 window.speechSynthesis.speak(initWave);
                 speechPipelineAuthenticated = true;
                 
-                writeInteractionToUiLog("System Awakening", "Vault channels aligned. Say keywords like 'sad', 'tired', or 'hello' to trigger dedicated node configurations.", "Neutral");
+                writeInteractionToUiLog("System Awakening", "Vault channels aligned. Say keywords like 'sad', 'tired', 'hello', or ask it to 'listen' to trigger dedicated node configurations.", "Neutral");
             }
         }
 
@@ -533,6 +542,10 @@
             // Checking for greeting markers
             if (cleanInput.includes('hello') || cleanInput.includes('hi') || cleanInput.includes('hey') || cleanInput.includes('morning') || cleanInput.includes('greet') || cleanInput.includes('good day')) {
                 return emotionalIntentNodes.greeting;
+            }
+            // Checking for attentive listening markers
+            if (cleanInput.includes('listen') || cleanInput.includes('talk') || cleanInput.includes('speak') || cleanInput.includes('want') || cleanInput.includes('hear')) {
+                return emotionalIntentNodes.listening;
             }
             
             // Default random fallback distribution system
@@ -557,7 +570,7 @@
 
                 setTimeout(() => {
                     // Simulating a voice recognition response intake box layout context
-                    const spokenSimulation = prompt("Simulate what you just said to the orb assistant (e.g., 'I am tired' or 'Hello'):");
+                    const spokenSimulation = prompt("Simulate what you just said to the orb assistant (e.g., 'listen to me', 'I am tired', 'Hello'):");
                     commitShardPurificationEvent("Voice Intake");
                     
                     const derivedNode = parseInputIntent(spokenSimulation || "");
@@ -573,7 +586,7 @@
             if (!speechPipelineAuthenticated) return;
             window.speechSynthesis.cancel();
 
-            const textWhisperValue = prompt("Type your whisper thoughts securely (e.g. 'sad', 'hello', etc.):");
+            const textWhisperValue = prompt("Type your whisper thoughts securely (e.g. 'listen', 'sad', 'hello', etc.):");
             if (textWhisperValue && textWhisperValue.trim() !== "") {
                 statePrompt.innerText = "Encoding text metric tokens...";
                 
