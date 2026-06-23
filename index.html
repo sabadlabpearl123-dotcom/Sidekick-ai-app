@@ -17,8 +17,7 @@
         .wake-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(168, 85, 247, 0.4); padding: 14px 36px; border-radius: 25px; color: #ffffff; cursor: pointer; }
 
         .hud-header { display: flex; justify-content: space-between; align-items: center; z-index: 10; }
-        .header-crown { color: #fbbf24; margin-left: 6px; cursor: pointer; font-size: 14px; transition: transform 0.2s; }
-        .header-crown:active { transform: scale(1.2); }
+        .header-crown { color: #fbbf24; margin-left: 6px; cursor: pointer; font-size: 14px; }
         .vault-pill { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); padding: 6px 12px; border-radius: 20px; font-size: 11px; color: #e2d5f8; }
 
         .stage-box { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
@@ -75,6 +74,7 @@
         const statePrompt = document.getElementById('state-prompt');
         const logContainer = document.getElementById('log-container');
 
+        // This function is now explicitly attached to the onclick event of the orb
         function triggerOrbProcessingCycle() {
             isOrbListening = !isOrbListening;
             if(isOrbListening) {
