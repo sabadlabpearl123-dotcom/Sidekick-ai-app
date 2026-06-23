@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,246 +10,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-
-/* PART 2 CSS WILL BE ADDED HERE */
-
-</style>
-
-</head>
-<body>
-
-<div class="app-shell">
-
-    <!-- INTRO SCREEN -->
-
-    <section id="introScreen" class="intro-screen">
-
-        <div class="intro-content">
-
-            <h1>Sidekick AI</h1>
-
-            <p>Your Intelligent Voice Companion</p>
-
-            <button id="startButton">
-                Start Sidekick AI
-            </button>
-
-        </div>
-
-    </section>
-
-    <!-- HEADER -->
-
-    <header class="top-header">
-
-        <div class="profile-section">
-
-            <div class="avatar">
-                P
-            </div>
-
-            <div class="profile-info">
-
-                <h2>Pearl</h2>
-
-                <p>Connected & Ready</p>
-
-            </div>
-
-        </div>
-
-        <button id="settingsButton" class="icon-button">
-            <i class="fa-solid fa-gear"></i>
-        </button>
-
-    </header>
-
-    <!-- STATUS CARD -->
-
-    <section class="status-card">
-
-        <div class="status-item">
-
-            <span>Conversations</span>
-
-            <h3 id="conversationCount">0</h3>
-
-        </div>
-
-        <div class="status-item">
-
-            <span>Voice Mode</span>
-
-            <h3 id="voiceMode">Friendly</h3>
-
-        </div>
-
-    </section>
-
-    <!-- ORB AREA -->
-
-    <main class="orb-stage">
-
-        <div class="ring ring1"></div>
-
-        <div class="ring ring2"></div>
-
-        <div class="ring ring3"></div>
-
-        <button id="orbButton" class="orb-core"></button>
-
-        <p id="orbStatus">
-            Tap Orb To Talk
-        </p>
-
-    </main>
-
-    <!-- AI RESPONSE CARD -->
-
-    <section class="response-card">
-
-        <div class="response-header">
-
-            <i class="fa-solid fa-robot"></i>
-
-            <span>Sidekick Response</span>
-
-        </div>
-
-        <div id="responseText" class="response-text">
-
-            Hello! I am ready to assist you.
-
-        </div>
-
-    </section>
-
-    <!-- ACTION BUTTONS -->
-
-    <section class="quick-actions">
-
-        <button id="typeButton" class="action-button">
-
-            <i class="fa-solid fa-keyboard"></i>
-
-            <span>Type</span>
-
-        </button>
-
-        <button id="scanButton" class="action-button">
-
-            <i class="fa-solid fa-eye"></i>
-
-            <span>Scan</span>
-
-        </button>
-
-        <button id="logsButton" class="action-button">
-
-            <i class="fa-solid fa-book"></i>
-
-            <span>Logs</span>
-
-        </button>
-
-        <button id="voiceButton" class="action-button">
-
-            <i class="fa-solid fa-microphone"></i>
-
-            <span>Voice</span>
-
-        </button>
-
-    </section>
-
-    <!-- LOGS DRAWER -->
-
-    <section id="logsDrawer" class="logs-drawer">
-
-        <div class="drawer-header">
-
-            <h3>
-
-                <i class="fa-solid fa-clock-rotate-left"></i>
-
-                Conversation History
-
-            </h3>
-
-            <button id="closeLogsButton">
-
-                Close
-
-            </button>
-
-        </div>
-
-        <div id="logsContainer" class="logs-container">
-
-            <div class="log-item">
-
-                Sidekick AI started successfully.
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- SETTINGS PANEL -->
-
-    <section id="settingsPanel" class="settings-panel">
-
-        <h3>
-
-            <i class="fa-solid fa-sliders"></i>
-
-            Settings
-
-        </h3>
-
-        <label>Voice Personality</label>
-
-        <select id="voiceSelector">
-
-            <option>Friendly</option>
-            <option>Calm</option>
-            <option>Motivational</option>
-            <option>Professional</option>
-
-        </select>
-
-        <br><br>
-
-        <label>Theme</label>
-
-        <select id="themeSelector">
-
-            <option>Cosmic Violet</option>
-            <option>Aurora Blue</option>
-            <option>Emerald Pulse</option>
-            <option>Solar Gold</option>
-
-        </select>
-
-    </section>
-
-    <!-- BOTTOM NAVIGATION -->
-
-    <footer class="bottom-nav">
-
-        <button class="nav-button active">
-
-            <i class="fa-solid fa-house"></i>
-
-            <span>Home</span>
-
-        </button>
-
-        <button class="nav-button">
-
-            <i class="fa-solid fa
-            *{
+*{
 margin:0;
 padding:0;
 box-sizing:border-box;
@@ -556,6 +319,7 @@ border-radius:10px;
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:8px;
+margin-top: auto;
 }
 
 .nav-button{
@@ -569,6 +333,7 @@ flex-direction:column;
 gap:5px;
 align-items:center;
 font-size:11px;
+cursor:pointer;
 }
 
 .nav-button.active{
@@ -608,289 +373,301 @@ transform:scale(1.08);
 transform:scale(1);
 }
 }
+</style>
+
+</head>
+<body>
+
+<div class="app-shell">
+
+    <section id="introScreen" class="intro-screen">
+        <div class="intro-content">
+            <h1>Sidekick AI</h1>
+            <p>Your Intelligent Voice Companion</p>
+            <button id="startButton">
+                Start Sidekick AI
+            </button>
+        </div>
+    </section>
+
+    <header class="top-header">
+        <div class="profile-section">
+            <div class="avatar">P</div>
+            <div class="profile-info">
+                <h2>Pearl</h2>
+                <p>Connected & Ready</p>
+            </div>
+        </div>
+        <button id="settingsButton" class="icon-button">
+            <i class="fa-solid fa-gear"></i>
+        </button>
+    </header>
+
+    <section class="status-card">
+        <div class="status-item">
+            <span>Conversations</span>
+            <h3 id="conversationCount">0</h3>
+        </div>
+        <div class="status-item">
+            <span>Voice Mode</span>
+            <h3 id="voiceMode">Friendly</h3>
+        </div>
+    </section>
+
+    <main class="orb-stage">
+        <div class="ring ring1"></div>
+        <div class="ring ring2"></div>
+        <div class="ring ring3"></div>
+        <button id="orbButton" class="orb-core"></button>
+        <p id="orbStatus" class="orb-status">
+            Tap Orb To Talk
+        </p>
+    </main>
+
+    <section class="response-card">
+        <div class="response-header">
+            <i class="fa-solid fa-robot"></i>
+            <span>Sidekick Response</span>
+        </div>
+        <div id="responseText" class="response-text">
+            Hello! I am ready to assist you.
+        </div>
+    </section>
+
+    <section class="quick-actions">
+        <button id="typeButton" class="action-button">
+            <i class="fa-solid fa-keyboard"></i>
+            <span>Type</span>
+        </button>
+        <button id="scanButton" class="action-button">
+            <i class="fa-solid fa-eye"></i>
+            <span>Scan</span>
+        </button>
+        <button id="logsButton" class="action-button">
+            <i class="fa-solid fa-book"></i>
+            <span>Logs</span>
+        </button>
+        <button id="voiceButton" class="action-button">
+            <i class="fa-solid fa-microphone"></i>
+            <span>Voice</span>
+        </button>
+    </section>
+
+    <section id="logsDrawer" class="logs-drawer">
+        <div class="drawer-header">
+            <h3>
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                Conversation History
+            </h3>
+            <button id="closeLogsButton">
+                Close
+            </button>
+        </div>
+        <div id="logsContainer" class="logs-container">
+            <div class="log-item">
+                Sidekick AI started successfully.
+            </div>
+        </div>
+    </section>
+
+    <section id="settingsPanel" class="settings-panel">
+        <h3>
+            <i class="fa-solid fa-sliders"></i>
+            Settings
+        </h3>
+        <label>Voice Personality</label>
+        <select id="voiceSelector">
+            <option>Friendly</option>
+            <option>Calm</option>
+            <option>Motivational</option>
+            <option>Professional</option>
+        </select>
+        <br><br>
+        <label>Theme</label>
+        <select id="themeSelector">
+            <option>Cosmic Violet</option>
+            <option>Aurora Blue</option>
+            <option>Emerald Pulse</option>
+            <option>Solar Gold</option>
+        </select>
+    </section>
+
+    <footer class="bottom-nav">
+        <button class="nav-button active">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </button>
+        <button class="nav-button">
+            <i class="fa-solid fa-brain"></i>
+            <span>Features</span>
+        </button>
+        <button class="nav-button">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </button>
+        <button class="nav-button">
+            <i class="fa-solid fa-gear"></i>
+            <span>System</span>
+        </button>
+    </footer>
+
+</div>
+
+<script>
 const orbButton = document.getElementById("orbButton");
 const orbStatus = document.getElementById("orbStatus");
 const responseText = document.getElementById("responseText");
 const logsContainer = document.getElementById("logsContainer");
-
 const logsButton = document.getElementById("logsButton");
 const closeLogsButton = document.getElementById("closeLogsButton");
 const logsDrawer = document.getElementById("logsDrawer");
-
 const settingsButton = document.getElementById("settingsButton");
 const settingsPanel = document.getElementById("settingsPanel");
-
 const startButton = document.getElementById("startButton");
 const introScreen = document.getElementById("introScreen");
-
-const conversationCount =
-document.getElementById("conversationCount");
+const conversationCount = document.getElementById("conversationCount");
 
 let totalConversations = 0;
 let listening = false;
 
 /* START APP */
-
 startButton.addEventListener("click", () => {
-
-introScreen.style.display = "none";
-
-speak(
-"Welcome to Sidekick AI. I am ready to assist you."
-);
-
+    introScreen.style.display = "none";
+    speak("Welcome to Sidekick AI. I am ready to assist you.");
 });
 
 /* TEXT TO SPEECH */
-
 function speak(text){
-
-window.speechSynthesis.cancel();
-
-const speech =
-new SpeechSynthesisUtterance(text);
-
-speech.rate = 1;
-speech.pitch = 1;
-
-window.speechSynthesis.speak(speech);
-
+    window.speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.rate = 1;
+    speech.pitch = 1;
+    window.speechSynthesis.speak(speech);
 }
 
 /* ADD LOG */
-
 function addLog(text){
-
-const div =
-document.createElement("div");
-
-div.className = "log-item";
-
-div.innerText = text;
-
-logsContainer.prepend(div);
-
+    const div = document.createElement("div");
+    div.className = "log-item";
+    div.innerText = text;
+    logsContainer.prepend(div);
 }
 
 /* SIMPLE AI */
-
 function getAIResponse(userText){
-
-const message = userText.toLowerCase();
-
-if(message.includes("hello")){
-
-return "Hello. It's great to hear from you.";
-
-}
-
-if(message.includes("how are you")){
-
-return "I'm doing well and ready to help.";
-
-}
-
-if(message.includes("sad")){
-
-return "I understand. Difficult days happen. Be kind to yourself.";
-
-}
-
-if(message.includes("happy")){
-
-return "That's wonderful. I'm glad you're feeling happy.";
-
-}
-
-if(message.includes("study")){
-
-return "Focus on one topic at a time and review your notes carefully.";
-
-}
-
-if(message.includes("exam")){
-
-return "Create a short review plan and practice the most important topics first.";
-
-}
-
-return "I heard you. Thank you for sharing that with me.";
-
+    const message = userText.toLowerCase();
+    if(message.includes("hello")){
+        return "Hello. It's great to hear from you.";
+    }
+    if(message.includes("how are you")){
+        return "I'm doing well and ready to help.";
+    }
+    if(message.includes("sad")){
+        return "I understand. Difficult days happen. Be kind to yourself.";
+    }
+    if(message.includes("happy")){
+        return "That's wonderful. I'm glad you're feeling happy.";
+    }
+    if(message.includes("study")){
+        return "Focus on one topic at a time and review your notes carefully.";
+    }
+    if(message.includes("exam")){
+        return "Create a short review plan and practice the most important topics first.";
+    }
+    return "I heard you. Thank you for sharing that with me.";
 }
 
 /* SPEECH RECOGNITION */
-
-const SpeechRecognition =
-window.SpeechRecognition ||
-window.webkitSpeechRecognition;
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 if(SpeechRecognition){
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = "en-US";
 
-const recognition =
-new SpeechRecognition();
+    orbButton.addEventListener("click", () => {
+        if(listening) return;
+        listening = true;
+        orbButton.classList.add("listening");
+        orbStatus.innerText = "Listening...";
+        recognition.start();
+    });
 
-recognition.continuous = false;
-recognition.lang = "en-US";
+    recognition.onresult = (event) => {
+        const userSpeech = event.results[0][0].transcript;
+        orbStatus.innerText = "You said: " + userSpeech;
+        const aiReply = getAIResponse(userSpeech);
+        responseText.innerText = aiReply;
+        speak(aiReply);
+        addLog("You: " + userSpeech);
+        addLog("AI: " + aiReply);
+        totalConversations++;
+        conversationCount.innerText = totalConversations;
+    };
 
-orbButton.addEventListener("click", () => {
+    recognition.onend = () => {
+        listening = false;
+        orbButton.classList.remove("listening");
+        setTimeout(() => {
+            orbStatus.innerText = "Tap Orb To Talk";
+        }, 1500);
+    };
 
-if(listening) return;
-
-listening = true;
-
-orbButton.classList.add("listening");
-
-orbStatus.innerText =
-"Listening...";
-
-recognition.start();
-
-});
-
-recognition.onresult = (event) => {
-
-const userSpeech =
-event.results[0][0].transcript;
-
-orbStatus.innerText =
-"You said: " + userSpeech;
-
-const aiReply =
-getAIResponse(userSpeech);
-
-responseText.innerText =
-aiReply;
-
-speak(aiReply);
-
-addLog("You: " + userSpeech);
-
-addLog("AI: " + aiReply);
-
-totalConversations++;
-
-conversationCount.innerText =
-totalConversations;
-
-};
-
-recognition.onend = () => {
-
-listening = false;
-
-orbButton.classList.remove("listening");
-
-setTimeout(() => {
-
-orbStatus.innerText =
-"Tap Orb To Talk";
-
-}, 1500);
-
-};
-
-recognition.onerror = () => {
-
-listening = false;
-
-orbButton.classList.remove("listening");
-
-orbStatus.innerText =
-"Microphone Error";
-
-};
-
-}else{
-
-responseText.innerText =
-"Speech Recognition not supported on this device.";
-
+    recognition.onerror = () => {
+        listening = false;
+        orbButton.classList.remove("listening");
+        orbStatus.innerText = "Microphone Error";
+    };
+} else {
+    orbButton.addEventListener("click", () => {
+        orbStatus.innerText = "Speech native API missing";
+    });
 }
 
 /* LOG DRAWER */
-
 logsButton.addEventListener("click", () => {
-
-logsDrawer.classList.add("open");
-
+    logsDrawer.classList.add("open");
 });
 
 closeLogsButton.addEventListener("click", () => {
-
-logsDrawer.classList.remove("open");
-
+    logsDrawer.classList.remove("remove"); // Cleaned up target
+    logsDrawer.classList.remove("open");
 });
 
 /* SETTINGS */
-
 settingsButton.addEventListener("click", () => {
-
-if(settingsPanel.style.display === "block"){
-
-settingsPanel.style.display = "none";
-
-}else{
-
-settingsPanel.style.display = "block";
-
-}
-
+    if(settingsPanel.style.display === "block"){
+        settingsPanel.style.display = "none";
+    }else{
+        settingsPanel.style.display = "block";
+    }
 });
 
 /* TYPE BUTTON */
-
-document
-.getElementById("typeButton")
-.addEventListener("click", () => {
-
-const userText =
-prompt("Type a message");
-
-if(!userText) return;
-
-const aiReply =
-getAIResponse(userText);
-
-responseText.innerText =
-aiReply;
-
-speak(aiReply);
-
-addLog("You: " + userText);
-
-addLog("AI: " + aiReply);
-
-totalConversations++;
-
-conversationCount.innerText =
-totalConversations;
-
+document.getElementById("typeButton").addEventListener("click", () => {
+    const userText = prompt("Type a message");
+    if(!userText) return;
+    const aiReply = getAIResponse(userText);
+    responseText.innerText = aiReply;
+    speak(aiReply);
+    addLog("You: " + userText);
+    addLog("AI: " + aiReply);
+    totalConversations++;
+    conversationCount.innerText = totalConversations;
 });
 
 /* SCAN BUTTON */
-
-document
-.getElementById("scanButton")
-.addEventListener("click", () => {
-
-const reply =
-"Visual scan simulation completed successfully.";
-
-responseText.innerText =
-reply;
-
-speak(reply);
-
-addLog(reply);
-
+document.getElementById("scanButton").addEventListener("click", () => {
+    const reply = "Visual scan simulation completed successfully.";
+    responseText.innerText = reply;
+    speak(reply);
+    addLog(reply);
 });
 
 /* VOICE BUTTON */
-
-document
-.getElementById("voiceButton")
-.addEventListener("click", () => {
-
-speak(responseText.innerText);
-
+document.getElementById("voiceButton").addEventListener("click", () => {
+    speak(responseText.innerText);
 });
+</script>
+</body>
+</html>
