@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sidekick AI — Technical Prototype v2.0</title>
-    <!-- FontAwesome Icons for HUD and Navigation Deck -->
+    <!-- FontAwesome Icons for HUD, Navigation Deck, and Premium Crown -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* CORE CONFIGURATION RESET */
@@ -49,7 +49,7 @@
             overflow: hidden;
         }
 
-        /* WELCOME INTRO OVERLAY SCREEN */
+        /* WELCOME GREETING OVERLAY SCREEN */
         .welcome-overlay {
             position: absolute;
             top: 0;
@@ -169,7 +169,7 @@
             transform: translateY(0);
         }
 
-        /* FAINT LIGHT ROTATION MATRIX STAGE */
+        /* FAINT LIGHT ROTATION MATRIX STAGE WITH PREMIUM CROWN */
         .stage-box {
             position: relative;
             flex: 1;
@@ -178,6 +178,18 @@
             justify-content: center;
             align-items: center;
         }
+        
+        /* PREMIUM CROWN DISPLAY STYLING */
+        .premium-crown {
+            position: absolute;
+            top: 20%;
+            font-size: 26px;
+            color: #fbbf24;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 2px 4px rgba(0,0,0,0.5);
+            z-index: 20;
+            animation: floatingCrown 4s infinite ease-in-out;
+        }
+
         .faint-orbit-ring {
             position: absolute;
             width: 280px;
@@ -349,6 +361,10 @@
             0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
         }
+        @keyframes floatingCrown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
         @keyframes listeningPulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 40px #22c55e, 0 0 80px rgba(34, 197, 94, 0.3), inset -12px -12px 30px rgba(0,0,0,0.9); }
             50% { transform: scale(1.04); box-shadow: 0 0 55px #4ade80, 0 0 95px rgba(74, 222, 128, 0.5), inset -12px -12px 30px rgba(0,0,0,0.9); }
@@ -363,8 +379,9 @@
 
     <div class="app-canvas">
         
-        <!-- WELCOME GREETING OVERLAY (Section 1 & 2) -->
+        <!-- WELCOME GREETING OVERLAY -->
         <div id="intro-screen" class="welcome-overlay">
+            <i class="fa-solid fa-crown" style="color: #fbbf24; font-size: 32px; margin-bottom: 12px; filter: drop-shadow(0 0 10px rgba(251,191,36,0.5));"></i>
             <h1 class="welcome-logo">Sidekick AI</h1>
             <p class="welcome-subtitle">Technical Operations Engine v2.0</p>
             <button onclick="initializeCoreEngine()" class="wake-btn">Sync Node</button>
@@ -373,7 +390,7 @@
         <!-- TOP HUD METRICS OVERLAY -->
         <div class="hud-header">
             <div class="identity-box">
-                <h2>Sidekick AI</h2>
+                <h2>Sidekick AI <i class="fa-solid fa-crown" style="color: #fbbf24; font-size: 12px; margin-left: 2px;"></i></h2>
                 <p>Status: Synchronized</p>
             </div>
             
@@ -392,8 +409,11 @@
             +1 Shard Safely Purified
         </div>
 
-        <!-- CORE GALAXY ORB THEATRICAL STAGE (Section 2.1 & 2.2) -->
+        <!-- CORE GALAXY ORB THEATRICAL STAGE WITH FLOATING CROWN -->
         <div class="stage-box">
+            <!-- Premium Crown Floating Right Above the Orb Layout Matrix -->
+            <i class="fa-solid fa-crown premium-crown"></i>
+            
             <div class="faint-orbit-ring"></div>
             <div class="faint-orbit-inner"></div>
 
@@ -403,15 +423,13 @@
             <p id="state-prompt" class="status-prompt">Tap Core to Speak</p>
         </div>
 
-        <!-- OVERLAY CHRONICLE STORAGE INVENTORY PANEL (Section 2.5) -->
+        <!-- OVERLAY CHRONICLE STORAGE INVENTORY PANEL -->
         <div id="archive-logs" class="logs-overlay">
             <div class="panel-header">
                 <div class="panel-title">[Resonance Ledger Entries]</div>
                 <button onclick="toggleArchiveLogsView()" class="panel-close">Dismiss</button>
             </div>
-            <div id="archive-stream" class="panel-body">
-                <!-- Initial operational logs status generated layout -->
-            </div>
+            <div id="archive-stream" class="panel-body"></div>
         </div>
 
         <!-- SYMMETRIC ACTION DOCK -->
@@ -436,7 +454,7 @@
 
     </div>
 
-    <!-- MAIN ENGINE SCRIPT LOGIC WORKER (Section 2.3 & 2.4) -->
+    <!-- MAIN ENGINE SCRIPT LOGIC WORKER -->
     <script>
         const interactionOrb = document.getElementById('interaction-orb');
         const statePrompt = document.getElementById('state-prompt');
@@ -451,7 +469,27 @@
         let isOrbListening = false;
         let speechPipelineAuthenticated = false;
 
-        // LOCAL DATASET COMPLYING TO SECTION 2.2 & 2.3 MANUAL RULES
+        // FIXED INTENT SYSTEM NODES (GREETING & COMFORT PATHWAYS)
+        const emotionalIntentNodes = {
+            comfort: {
+                tone: "Comforting",
+                text: "I know you have a bad day today. You should rest first, and I'm just here waiting for you.",
+                hex: "radial-gradient(circle at 35% 25%, #ffffff 0%, #f472b6 20%, #db2777 50%, #4c0519 80%, #020005 100%)",
+                glow: "0 0 50px rgba(219, 39, 119, 0.7)",
+                rate: 0.85,
+                pitch: 0.95
+            },
+            greeting: {
+                tone: "Greeting",
+                text: "Good day user! It's a good day to start and spread positivity today.",
+                hex: "radial-gradient(circle at 35% 25%, #ffffff 0%, #fde047 15%, #ca8a04 50%, #451a03 80%, #020005 100%)",
+                glow: "0 0 50px rgba(234, 179, 8, 0.7)",
+                rate: 1.0,
+                pitch: 1.15
+            }
+        };
+
+        // LOCAL POOL DATASET MATRIX
         const dynamicResponseUniverse = [
             { 
                 tone: "Calm", 
@@ -460,14 +498,6 @@
                 glow: "0 0 50px rgba(139, 92, 246, 0.6)",
                 rate: 0.8,
                 pitch: 0.9
-            },
-            { 
-                tone: "Happy", 
-                text: "Brilliant frequencies detected! Your emotional data stream is flashing with vibrant clarity today.", 
-                hex: "radial-gradient(circle at 35% 25%, #ffffff 0%, #fde047 15%, #b45309 50%, #451a03 80%, #020005 100%)", 
-                glow: "0 0 50px rgba(217, 119, 6, 0.6)",
-                rate: 1.1,
-                pitch: 1.2
             },
             { 
                 tone: "Focused", 
@@ -479,16 +509,6 @@
             }
         ];
 
-        // SHY TEXT WHISPER RESPONSE DATA FACTORY
-        const silentWhisperResponse = {
-            tone: "Neutral",
-            text: "Silent text token processed securely. Your structural frequency has been registered into the ledger.",
-            hex: "radial-gradient(circle at 35% 25%, #ffffff 0%, #38bdf8 20%, #1d4ed8 50%, #1e3a8a 80%, #020005 100%)",
-            glow: "0 0 50px rgba(37, 99, 235, 0.6)",
-            rate: 1.0,
-            pitch: 1.0
-        };
-
         // STARTUP SCREEN ACTION CONTROL
         function initializeCoreEngine() {
             introScreen.classList.add('welcome-hidden');
@@ -498,21 +518,37 @@
                 window.speechSynthesis.speak(initWave);
                 speechPipelineAuthenticated = true;
                 
-                // Set initial log system entry text row element
-                writeInteractionToUiLog("System Awakening", "Vault channels aligned. Use Voice Capture intake or Silent Whisper nodes to earn Shards.", "Neutral");
+                writeInteractionToUiLog("System Awakening", "Vault channels aligned. Say keywords like 'sad', 'tired', or 'hello' to trigger dedicated node configurations.", "Neutral");
             }
         }
 
-        // ONE-TOUCH INPUT LOGIC LOOP (Section 2.1)
+        // TEXT INTERPRETATION INTENT ANALYZER ENGINE
+        function parseInputIntent(rawString) {
+            const cleanInput = rawString.toLowerCase();
+            
+            // Checking for comfort/sad markers
+            if (cleanInput.includes('sad') || cleanInput.includes('tired') || cleanInput.includes('bad') || cleanInput.includes('exhausted') || cleanInput.includes('down')) {
+                return emotionalIntentNodes.comfort;
+            }
+            // Checking for greeting markers
+            if (cleanInput.includes('hello') || cleanInput.includes('hi') || cleanInput.includes('hey') || cleanInput.includes('morning') || cleanInput.includes('greet') || cleanInput.includes('good day')) {
+                return emotionalIntentNodes.greeting;
+            }
+            
+            // Default random fallback distribution system
+            return dynamicResponseUniverse[Math.floor(Math.random() * dynamicResponseUniverse.length)];
+        }
+
+        // ONE-TOUCH INPUT LOGIC LOOP
         function triggerOrbProcessingCycle() {
             if (!speechPipelineAuthenticated) return;
-            window.speechSynthesis.cancel(); // Mute overlapping sound instantly on touch context
+            window.speechSynthesis.cancel(); 
 
             if (!isOrbListening) {
                 // USER TAP 1: ENTER LISTENING STATE
                 isOrbListening = true;
                 interactionOrb.classList.add('orb-state-listening');
-                statePrompt.innerText = "System Listening... Tap again to confirm interaction.";
+                statePrompt.innerText = "Listening... (Simulating text trigger context via prompt next)";
             } else {
                 // USER TAP 2: GENERATE RESPONSE EVENT
                 isOrbListening = false;
@@ -520,33 +556,36 @@
                 statePrompt.innerText = "Processing matrix fragments...";
 
                 setTimeout(() => {
+                    // Simulating a voice recognition response intake box layout context
+                    const spokenSimulation = prompt("Simulate what you just said to the orb assistant (e.g., 'I am tired' or 'Hello'):");
                     commitShardPurificationEvent("Voice Intake");
-                    // Random array element node collection sequence (Section 2.3)
-                    const nodeArrayPick = dynamicResponseUniverse[Math.floor(Math.random() * dynamicResponseUniverse.length)];
-                    dispatchCoreFeedbackOutput(nodeArrayPick);
-                }, 750);
+                    
+                    const derivedNode = parseInputIntent(spokenSimulation || "");
+                    dispatchCoreFeedbackOutput(derivedNode);
+                }, 400);
             }
         }
 
         interactionOrb.addEventListener('click', triggerOrbProcessingCycle);
 
-        // SHY MODE COMPLIANCE FUNCTION INTAKE
+        // SILENT INTENT WHISPER NODE
         function executeSilentWhisperNode() {
             if (!speechPipelineAuthenticated) return;
             window.speechSynthesis.cancel();
 
-            const textWhisperValue = prompt("Type your whisper text safely into the core network:");
+            const textWhisperValue = prompt("Type your whisper thoughts securely (e.g. 'sad', 'hello', etc.):");
             if (textWhisperValue && textWhisperValue.trim() !== "") {
                 statePrompt.innerText = "Encoding text metric tokens...";
                 
                 setTimeout(() => {
                     commitShardPurificationEvent("Silent Whispering");
-                    dispatchCoreFeedbackOutput(silentWhisperResponse);
-                }, 700);
+                    const derivedNode = parseInputIntent(textWhisperValue);
+                    dispatchCoreFeedbackOutput(derivedNode);
+                }, 500);
             }
         }
 
-        // REDEEM VOICETIME CONVERSION ECONOMY BLOCK (Section 2.1)
+        // REDEEM VOICETIME CONVERSION ECONOMY BLOCK
         function executeShardRedemptionCycle() {
             if (shardInventoryCount >= 1) {
                 shardInventoryCount--;
@@ -559,7 +598,7 @@
                 const audioChimeFeedback = new SpeechSynthesisUtterance("Shard dissolved. Extra minutes added safely.");
                 window.speechSynthesis.speak(audioChimeFeedback);
 
-                alert("Redemption Complete: 1 Shard exchanged for +1.0 minute of voice capacity.");
+                alert("Redemption Complete: 1 Shard exchanged for +1.0 minute of premium voice capacity.");
             } else {
                 alert("Insufficient Resources! You have 0 Shards. Tap the center Orb or click [Type] to purify a fragment first.");
             }
@@ -569,13 +608,12 @@
             shardInventoryCount++;
             shardLbl.innerText = shardInventoryCount;
             
-            // Pop floating status info toast notice block
             rewardToast.innerText = `+1 Shard Purified via ${sourceIdentifier}`;
             rewardToast.classList.add('toast-visible');
             setTimeout(() => rewardToast.classList.remove('toast-visible'), 2400);
         }
 
-        // OUTPUT DRIVER CORE MANAGEMENT ENGINE (Section 2.2 & 2.4)
+        // OUTPUT DRIVER CORE MANAGEMENT ENGINE
         function dispatchCoreFeedbackOutput(node) {
             statePrompt.innerText = "Tap Core to Speak";
             
@@ -583,13 +621,13 @@
             interactionOrb.style.background = node.hex;
             interactionOrb.style.boxShadow = node.glow;
 
-            // Step 2: Web Speech Synthesis Processing Core (Section 2.4)
+            // Step 2: Web Speech Synthesis Processing Core
             const structuralUtterance = new SpeechSynthesisUtterance(node.text);
             structuralUtterance.rate = node.rate;
             structuralUtterance.pitch = node.pitch;
             window.speechSynthesis.speak(structuralUtterance);
 
-            // Step 3: Insert Entry Records row into UI Storage Logs (Section 2.5)
+            // Step 3: Insert Entry Records row into UI Storage Logs
             writeInteractionToUiLog(node.tone, node.text, node.tone);
         }
 
@@ -601,7 +639,7 @@
             const trackingDiv = document.createElement('div');
             trackingDiv.className = "stream-card";
             trackingDiv.innerHTML = `
-                <span class="stream-timestamp">[${timeString}] Classification: ${classification}</span>
+                <span class="stream-timestamp">[${timeString}] Intent Analysis: ${classification}</span>
                 <b style="color:#f472b6">[${emotionalLabel}]</b> ${text}
             `;
             archiveStream.insertBefore(trackingDiv, archiveStream.firstChild);
@@ -612,9 +650,9 @@
         }
 
         function executeAmbientScan() {
-            alert("Environmental telemetry scanned successfully. Matrix optimized.");
-            const focusedScanMock = dynamicResponseUniverse[2]; // Triggers focused template context response payload
-            dispatchCoreFeedbackOutput(focusedScanMock);
+            alert("Environmental telemetry scanned successfully. Premium Matrix optimized.");
+            // Standard baseline greetings run inside the setup layout cycle routine context 
+            dispatchCoreFeedbackOutput(emotionalIntentNodes.greeting);
         }
     </script>
 </body>
