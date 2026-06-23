@@ -45,7 +45,8 @@
             <p>Tap Orb</p>
         </div>
         <div id="vault-logs" class="logs-overlay">
-            <button onclick="document.getElementById('vault-logs').style.display='none'" style="color:#a78bfa; background:none; border:none; margin-bottom:10px;">Close Vault</button>
+            <!-- Dismiss button added to return to main -->
+            <button onclick="document.getElementById('vault-logs').style.display='none'" style="color:#a78bfa; background:none; border:none; margin-bottom:10px; cursor:pointer;">Dismiss</button>
             <div id="log-container"></div>
         </div>
         <div class="navigation-dock">
@@ -75,9 +76,11 @@
         }
 
         function toggleOrb() {
-            const resp = "I am listening.";
+            // Orb now records and speaks
+            const resp = "I am here, always listening to you.";
             speak(resp);
             addLog("User: [Orb Tap]");
+            addLog("AI: " + resp);
             updateShards();
         }
 
