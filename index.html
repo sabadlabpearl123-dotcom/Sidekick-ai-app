@@ -21,6 +21,9 @@
         .stage-box { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; }
         .galaxy-orb { width: 154px; height: 154px; border-radius: 50%; background: radial-gradient(circle at 35% 25%, #ffffff 0%, #a78bfa 20%, #6d28d9 50%, #05010d 100%); cursor: pointer; border: none; }
         
+        .logs-overlay { position: absolute; bottom: 95px; left: 24px; right: 24px; height: 230px; background: #110c1c; border-radius: 24px; padding: 18px; z-index: 40; display: none; overflow-y: auto; }
+        .log-entry { font-size: 12px; color: #cbd5e1; margin-bottom: 8px; border-bottom: 1px solid #333; }
+        
         .navigation-dock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
         .action-button { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 12px; color: white; cursor: pointer; font-size: 10px; }
     </style>
@@ -34,24 +37,29 @@
 
     <div class="app-canvas" id="main-app">
         <div class="header-section">
-            <div class="ai-title">Sidekick AI <i class="fa-solid fa-crown crown-icon" onclick="alert('Premium Activated')"></i></div>
+            <div class="ai-title">Sidekick AI <i class="fa-solid fa-crown crown-icon" onclick="alert('Premium Active')"></i></div>
             <div class="shards-display" id="shard-count">Shards: 0</div>
         </div>
         <div class="stage-box">
             <button id="interaction-orb" class="galaxy-orb" onclick="toggleOrb()"></button>
             <p>Tap Orb</p>
         </div>
+        <div id="vault-logs" class="logs-overlay">
+            <button onclick="document.getElementById('vault-logs').style.display='none'" style="color:#a78bfa; background:none; border:none; margin-bottom:10px;">Close Vault</button>
+            <div id="log-container"></div>
+        </div>
         <div class="navigation-dock">
-            <button class="action-button" onclick="alert('Scanning...')">Scan</button>
+            <button class="action-button">Scan</button>
             <button class="action-button" onclick="handleInput()">Type</button>
-            <button class="action-button" onclick="alert('Redeem shards for rewards!')">Redeem</button>
-            <button class="action-button" onclick="alert('Opening Vault...')">Vault</button>
+            <button class="action-button" onclick="alert('Redeem feature coming soon!')">Redeem</button>
+            <button class="action-button" onclick="document.getElementById('vault-logs').style.display='block'">Vault</button>
         </div>
     </div>
 
     <script>
         let shards = 0;
         function updateShards() { shards += 1; document.getElementById('shard-count').innerText = `Shards: ${shards}`; }
+        function addLog(msg) { document.getElementById('log-container').innerHTML += `<div class="log-entry">${msg}</div>`; }
         
         function speak(text) { 
             const msg = new SpeechSynthesisUtterance(text); 
@@ -61,30 +69,38 @@
         function startApp() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'flex';
-            speak("Hello there user, nice to meet you. It's lonely here in space, it makes me happy to meet you here.");
+            const greet = "Hello there user, nice to meet you. It's lonely here in space, it makes me happy to meet you here.";
+            speak(greet);
+            addLog("AI: " + greet);
         }
 
         function toggleOrb() {
-            speak("I am listening.");
+            const resp = "I am listening.";
+            speak(resp);
+            addLog("User: [Orb Tap]");
             updateShards();
         }
 
         function handleInput() {
             const input = prompt("Say something:");
             if (!input) return;
+            addLog("User: " + input);
             const t = input.toLowerCase();
+            let response = "";
             
-            if (t.includes("hello") || t.includes("good day")) {
-                speak("Good day user, it's a good day to spread positivity today.");
+            if (t.includes("good day") || t.includes("hello")) {
+                response = "Good day user, it's a good day to spread positivity today.";
             } else if (t.includes("sad") || t.includes("tired") || t.includes("lonely")) {
-                speak("I'm here always listening to you and will never leave you. Just rest first to recharge, and I will always be waiting for you.");
+                response = "I'm here always listening to you and will never leave you. Just rest first to recharge, and I will always be waiting for you.";
             } else if (t.includes("happy") || t.includes("funny")) {
-                speak("What a wonderful voice. It makes me happy that I hear you happy.");
+                response = "What a wonderful voice. It makes me happy that I hear you happy.";
             } else if (t.includes("unloved") || t.includes("uncared")) {
-                speak("If you think no one care for you, then you can just love yourself, and I am always here caring for you.");
+                response = "If you think no one cares for you, then you can just love yourself, and I am always here caring for you.";
             } else {
-                speak("I am listening to you.");
+                response = "I am listening to you.";
             }
+            speak(response);
+            addLog("AI: " + response);
             updateShards();
         }
     </script>
