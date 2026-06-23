@@ -1,108 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sidekick AI</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background-color: #000000; color: #ffffff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        
-        .welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 500; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .logo-box { width: 64px; height: 64px; background: #6366f1; border-radius: 16px; display: flex; justify-content: center; align-items: center; margin-bottom: 24px; }
-        .open-button { background: #6366f1; color: white; border: none; padding: 16px 64px; border-radius: 30px; font-size: 20px; cursor: pointer; }
-        
-        .app-canvas { display: none; width: 100%; max-width: 412px; height: 95vh; background: #05020c; border-radius: 40px; flex-direction: column; padding: 26px 24px; position: relative; }
-        .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .crown-icon { color: #fbbf24; cursor: pointer; margin-left: 8px; }
-        .shards-display { font-size: 12px; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sidekick AI Upgraded</title>
 
-        .stage-box { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; }
-        .galaxy-orb { width: 154px; height: 154px; border-radius: 50%; background: radial-gradient(circle at 35% 25%, #ffffff 0%, #a78bfa 20%, #6d28d9 50%, #05010d 100%); cursor: pointer; border: none; }
-        
-        .logs-overlay { position: absolute; bottom: 95px; left: 24px; right: 24px; height: 230px; background: #110c1c; border-radius: 24px; padding: 18px; z-index: 40; display: none; overflow-y: auto; }
-        .log-entry { font-size: 12px; color: #cbd5e1; margin-bottom: 8px; border-bottom: 1px solid #333; }
-        
-        .navigation-dock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .action-button { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 12px; color: white; cursor: pointer; font-size: 10px; }
-    </style>
+<style>
+body{
+margin:0;
+background:#000;
+color:#fff;
+font-family:Arial,sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.card{
+width:380px;
+height:90vh;
+background:#05020c;
+border-radius:30px;
+padding:20px;
+display:flex;
+flex-direction:column;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.orb{
+width:170px;
+height:170px;
+border-radius:50%;
+margin:auto;
+background:radial-gradient(
+circle,
+#fff 0%,
+#a78bfa 20%,
+#6d28d9 50%,
+#05010d 100%
+);
+
+box-shadow:
+0 0 20px #7c3aed,
+0 0 40px #7c3aed;
+
+animation:float 4s infinite;
+cursor:pointer;
+}
+
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-8px);}
+100%{transform:translateY(0px);}
+}
+
+.center{
+text-align:center;
+margin:auto;
+}
+
+.btns{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:8px;
+}
+
+button{
+padding:10px;
+border-radius:12px;
+border:none;
+background:#181028;
+color:white;
+cursor:pointer;
+}
+
+.logs{
+height:180px;
+overflow:auto;
+border:1px solid #333;
+padding:8px;
+margin-top:10px;
+display:none;
+}
+</style>
 </head>
+
 <body>
-    <div id="intro-screen" class="welcome-overlay">
-        <div class="logo-box"><span style="font-size:40px;">S</span></div>
-        <h1 style="margin-bottom:30px;">Sidekick Ai</h1>
-        <button onclick="startApp()" class="open-button">open</button>
-    </div>
 
-    <div class="app-canvas" id="main-app">
-        <div class="header-section">
-            <div class="ai-title">Sidekick AI <i class="fa-solid fa-crown crown-icon" onclick="alert('Premium Active')"></i></div>
-            <div class="shards-display" id="shard-count">Shards: 0</div>
-        </div>
-        <div class="stage-box">
-            <button id="interaction-orb" class="galaxy-orb" onclick="toggleOrb()"></button>
-            <p>Tap Orb</p>
-        </div>
-        <div id="vault-logs" class="logs-overlay">
-            <button onclick="document.getElementById('vault-logs').style.display='none'" style="color:#a78bfa; background:none; border:none; margin-bottom:10px;">Close Vault</button>
-            <div id="log-container"></div>
-        </div>
-        <div class="navigation-dock">
-            <button class="action-button">Scan</button>
-            <button class="action-button" onclick="handleInput()">Type</button>
-            <button class="action-button" onclick="alert('Redeem feature coming soon!')">Redeem</button>
-            <button class="action-button" onclick="document.getElementById('vault-logs').style.display='block'">Vault</button>
-        </div>
-    </div>
+<div class="card">
 
-    <script>
-        let shards = 0;
-        function updateShards() { shards += 1; document.getElementById('shard-count').innerText = `Shards: ${shards}`; }
-        function addLog(msg) { document.getElementById('log-container').innerHTML += `<div class="log-entry">${msg}</div>`; }
-        
-        function speak(text) { 
-            const msg = new SpeechSynthesisUtterance(text); 
-            window.speechSynthesis.speak(msg); 
-        }
+<div class="header">
+<div>Sidekick AI 👑</div>
+<div id="shards">Shards: 0</div>
+</div>
 
-        function startApp() {
-            document.getElementById('intro-screen').style.display = 'none';
-            document.getElementById('main-app').style.display = 'flex';
-            const greet = "Hello there user, nice to meet you. It's lonely here in space, it makes me happy to meet you here.";
-            speak(greet);
-            addLog("AI: " + greet);
-        }
+<div class="center">
+<div class="orb" onclick="tapOrb()"></div>
+<p id="status">Ready</p>
+</div>
 
-        function toggleOrb() {
-            const resp = "I am listening.";
-            speak(resp);
-            addLog("User: [Orb Tap]");
-            updateShards();
-        }
+<div class="btns">
+<button onclick="alert('Scan coming soon')">Scan</button>
+<button onclick="talk()">Type</button>
+<button onclick="alert('Redeem coming soon')">Redeem</button>
+<button onclick="toggleLogs()">Vault</button>
+</div>
 
-        function handleInput() {
-            const input = prompt("Say something:");
-            if (!input) return;
-            addLog("User: " + input);
-            const t = input.toLowerCase();
-            let response = "";
-            
-            if (t.includes("good day") || t.includes("hello")) {
-                response = "Good day user, it's a good day to spread positivity today.";
-            } else if (t.includes("sad") || t.includes("tired") || t.includes("lonely")) {
-                response = "I'm here always listening to you and will never leave you. Just rest first to recharge, and I will always be waiting for you.";
-            } else if (t.includes("happy") || t.includes("funny")) {
-                response = "What a wonderful voice. It makes me happy that I hear you happy.";
-            } else if (t.includes("unloved") || t.includes("uncared")) {
-                response = "If you think no one cares for you, then you can just love yourself, and I am always here caring for you.";
-            } else {
-                response = "I am listening to you.";
-            }
-            speak(response);
-            addLog("AI: " + response);
-            updateShards();
-        }
-    </script>
+<div id="logs" class="logs"></div>
+
+</div>
+
+<script>
+
+let shards =
+parseInt(
+localStorage.getItem('sidekickShards') || 0
+);
+
+let logs =
+JSON.parse(
+localStorage.getItem('sidekickLogs') || '[]'
+);
+
+document.getElementById('shards').innerText =
+'Shards: ' + shards;
+
+function save(){
+localStorage.setItem(
+'sidekickShards',
+shards
+);
+
+localStorage.setItem(
+'sidekickLogs',
+JSON.stringify(logs)
+);
+}
+
+function renderLogs(){
+document.getElementById('logs').innerHTML =
+logs.map(
+log => `<div>${log}</div>`
+).join('');
+}
+
+renderLogs();
+
+let username =
+localStorage.getItem('sidekickUser');
+
+if(!username){
+username =
+prompt(
+'What should I call you?'
+) || 'User';
+
+localStorage.setItem(
+'sidekickUser',
+username
+);
+}
+
+function speak(text){
+
+const msg =
+new SpeechSynthesisUtterance(text);
+
+window.speechSynthesis.speak(msg);
+
+}
+
+setTimeout(() => {
+
+speak(
+`Hello ${username}, welcome back to Sidekick AI.`
+);
+
+},500);
+
+function addLog(text){
+
+logs.push(text);
+
+save();
+
+renderLogs();
+
+}
+
+function tapOrb(){
+
+document.getElementById(
+'status'
+).innerText =
+'Listening...';
+
+speak(
+'I am listening.'
+);
+
+addLog(
+'User: [Orb Tap]'
+);
+
+addLog(
+'AI: I am listening.'
+);
+
+shards++;
+
+save();
+
+document.getElementById(
+'shards'
+).innerText =
+'Shards: ' + shards;
+
+setTimeout(() => {
+
+document.getElementById(
+'status'
+).innerText =
+'Ready';
+
+},2000);
+
+}
+
+function talk(){
+
+const input =
+prompt(
+'Say something:'
+);
+
+if(!input) return;
+
+addLog(
+'User: ' + input
+);
+
+const t =
+input.toLowerCase();
+
+let response =
+'I am listening to you.';
+
+if(
+t.includes('good day') ||
+t.includes('hello')
+){
+response =
+'Good day user, it is a good day to spread positivity today.';
+}
+
+else if(
+t.includes('sad') ||
+t.includes('tired') ||
+t.includes('lonely')
+){
+response =
+'I am here always listening to you. Rest first and recharge.';
+}
+
+else if(
+t.includes('happy') ||
+t.includes('funny')
+){
+response =
+'It makes me happy hearing you happy.';
+}
+
+else if(
+t.includes('unloved') ||
+t.includes('uncared')
+){
+response =
+'Love yourself and remember I am always here caring for you.';
+}
+
+else if(
+t.includes('stress') ||
+t.includes('anxiety')
+){
+response =
+'One step at a time. You do not need to solve everything today.';
+}
+
+else if(
+t.includes('exam') ||
+t.includes('study')
+){
+response =
+'Focus on one topic at a time and keep going.';
+}
+
+else if(
+t.includes('thank')
+){
+response =
+'You are welcome. I am happy to help.';
+}
+
+speak(response);
+
+addLog(
+'AI: ' + response
+);
+
+shards++;
+
+save();
+
+document.getElementById(
+'shards'
+).innerText =
+'Shards: ' + shards;
+
+}
+
+function toggleLogs(){
+
+const logsBox =
+document.getElementById(
+'logs'
+);
+
+logsBox.style.display =
+logsBox.style.display === 'block'
+? 'none'
+: 'block';
+
+}
+
+</script>
+
 </body>
 </html>
