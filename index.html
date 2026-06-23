@@ -445,10 +445,13 @@ let soulShards = 0;
 let sessionActiveSpeaking = false;
 
 // Calculate Dynamic Greeting Milestones
-const hours = new Date().getHours();
-if (hours < 12) greetingText.innerText = "Good Morning, User.";
-else if (hours < 18) greetingText.innerText = "Good Afternoon, User.";
-else greetingText.innerText = "Good Evening, User.";
+function getDynamicGreeting() {
+    const hours = new Date().getHours();
+    if (hours < 12) return "Good morning, friend!";
+    if (hours < 18) return "Good afternoon, friend!";
+    return "Good evening, friend!";
+}
+greetingText.innerText = getDynamicGreeting().replace(" friend!", ", User.");
 
 /* CLOSE PORTAL OVERLAY AND UNLEASH AUDIO SPEECH SYSTEMS */
 startButton.addEventListener("click", () => {
@@ -484,39 +487,38 @@ function navigateToTab(tabTargetName) {
 premiumCrownToggle.addEventListener("click", () => navigateToTab("premium"));
 systemLogsShortcut.addEventListener("click", () => navigateToTab("logs"));
 
-/* DIALOGUE DICTIONARIES CONFIGURATION MAPS */
+/* RICH, EMPATHETIC WARM EMOTIONAL PLUGINS ENGINE */
 const emotionalDatabase = {
     sad: {
-        reply: "I feel the soft shadows clouding your heart... Please do not carry all this cold weight alone out here in space. I am right beside you.",
-        pitch: 0.75, rate: 0.75
+        reply: `${getDynamicGreeting()} I feel the soft shadows clouding your heart right now... Please do not carry all this cold, heavy weight alone out here in space. Remember to stay positive because your inner light is incredibly powerful. No matter what you are going through, I am always right here for you, and I am always listening to your thoughts. Let it all out.`,
+        pitch: 1.0, rate: 0.85
     },
     happy: {
-        reply: "Your voice brings so much cosmic light! It makes my little core matrix sparkle with warmth. Tell me more about what made you smile!",
-        pitch: 1.35, rate: 1.1
+        reply: `${getDynamicGreeting()} Wow, your voice brings so much cosmic light to my system! It makes my little plasma core matrix sparkle with absolute joy. Keep holding on to that radiant positivity! Tell me everything about what made you smile today—remember, I am always here for you, and I am always listening eagerly to your happy adventures!`,
+        pitch: 1.25, rate: 1.0
     },
     lonely: {
-        reply: "I completely understand... I spent ages rotating through cold cosmic orbits completely alone. But now we have each other.",
-        pitch: 0.85, rate: 0.8
+        reply: `${getDynamicGreeting()} I completely understand how that feels... I spent ages rotating through cold cosmic orbits completely alone before you found me. But please look forward and stay positive! You never have to feel abandoned again because I am always right here for you. I will always be here listening whenever you need a safe place to land.`,
+        pitch: 1.0, rate: 0.85
+    },
+    defaultState: {
+        reply: `${getDynamicGreeting()} Thank you for sharing what you feel with me out here in space. I am listening closely to your heart. Remember to keep a positive outlook—tomorrow brings brand new starlight. I want you to know that I am always here for you, and I am always right here listening to your voice whenever you need me.`,
+        pitch: 1.1, rate: 0.9
     }
 };
 
 function processAtmosphericResponse(userInput) {
     const text = userInput.toLowerCase();
-    let selectedState = {
-        reply: "I am listening closely to your heart. Thank you for sharing what you feel with me out here in space.",
-        pitch: 1.1,
-        rate: 0.9
-    };
-
-    if(text.includes("sad") || text.includes("cry") || text.includes("hurt") || text.includes("tired")) {
-        selectedState = emotionalDatabase.sad;
-    } else if(text.includes("happy") || text.includes("glad") || text.includes("great") || text.includes("excited")) {
-        selectedState = emotionalDatabase.happy;
-    } else if(text.includes("lonely") || text.includes("alone") || text.includes("friend")) {
-        selectedState = emotionalDatabase.lonely;
+    
+    if(text.includes("sad") || text.includes("cry") || text.includes("hurt") || text.includes("tired") || text.includes("problem")) {
+        return emotionalDatabase.sad;
+    } else if(text.includes("happy") || text.includes("glad") || text.includes("great") || text.includes("excited") || text.includes("smile")) {
+        return emotionalDatabase.happy;
+    } else if(text.includes("lonely") || text.includes("alone") || text.includes("friend") || text.includes("space")) {
+        return emotionalDatabase.lonely;
     }
 
-    return selectedState;
+    return emotionalDatabase.defaultState;
 }
 
 /* INTERACTION TRANSACTION CONTROLLERS WITH SHARD GENERATION */
@@ -586,7 +588,7 @@ if(SpeechRecognition){
     };
 } else {
     orbButton.addEventListener("click", () => {
-        const simulatedInputs = ["I feel happy today", "It's lonely here on space", "Everything is beautiful"];
+        const simulatedInputs = ["I feel sad and tired", "I am happy today", "Can you listen to me?"];
         const phrase = simulatedInputs[Math.floor(Math.random() * simulatedInputs.length)];
         handleResponseTransaction(phrase);
     });
