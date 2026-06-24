@@ -1,111 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sidekick AI</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background-color: #000000; color: #ffffff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        
-        .welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 500; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .logo-box { width: 64px; height: 64px; background: #6366f1; border-radius: 16px; display: flex; justify-content: center; align-items: center; margin-bottom: 24px; }
-        .open-button { background: #6366f1; color: white; border: none; padding: 16px 64px; border-radius: 30px; font-size: 20px; cursor: pointer; }
-        
-        .app-canvas { display: none; width: 100%; max-width: 412px; height: 95vh; background: #05020c; border-radius: 40px; flex-direction: column; padding: 26px 24px; position: relative; }
-        .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .crown-icon { color: #fbbf24; cursor: pointer; margin-left: 8px; }
-        .shards-display { font-size: 12px; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 20px; }
+<script>
+    let shards = 0;
+    
+    // Setup Speech Recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = SpeechRecognition ? new SpeechRecognition() : null;
 
-        .stage-box { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; }
-        .galaxy-orb { width: 154px; height: 154px; border-radius: 50%; background: radial-gradient(circle at 35% 25%, #ffffff 0%, #a78bfa 20%, #6d28d9 50%, #05010d 100%); cursor: pointer; border: none; }
-        
-        .logs-overlay { position: absolute; bottom: 95px; left: 24px; right: 24px; height: 230px; background: #110c1c; border-radius: 24px; padding: 18px; z-index: 40; display: none; overflow-y: auto; }
-        .log-entry { font-size: 12px; color: #cbd5e1; margin-bottom: 8px; border-bottom: 1px solid #333; }
-        
-        .navigation-dock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .action-button { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 12px; color: white; cursor: pointer; font-size: 10px; }
-    </style>
-</head>
-<body>
-    <div id="intro-screen" class="welcome-overlay">
-        <div class="logo-box"><span style="font-size:40px;">S</span></div>
-        <h1 style="margin-bottom:30px;">Sidekick Ai</h1>
-        <button onclick="startApp()" class="open-button">open</button>
-    </div>
+    if (recognition) {
+        recognition.continuous = false;
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
 
-    <div class="app-canvas" id="main-app">
-        <div class="header-section">
-            <div class="ai-title">Sidekick AI <i class="fa-solid fa-crown crown-icon" onclick="alert('Premium Active')"></i></div>
-            <div class="shards-display" id="shard-count">Shards: 0</div>
-        </div>
-        <div class="stage-box">
-            <button id="interaction-orb" class="galaxy-orb" onclick="toggleOrb()"></button>
-            <p>Tap Orb</p>
-        </div>
-        <div id="vault-logs" class="logs-overlay">
-            <!-- Dismiss button added to return to main -->
-            <button onclick="document.getElementById('vault-logs').style.display='none'" style="color:#a78bfa; background:none; border:none; margin-bottom:10px; cursor:pointer;">Dismiss</button>
-            <div id="log-container"></div>
-        </div>
-        <div class="navigation-dock">
-            <button class="action-button" onclick="alert('Scanning for connections...')">Scan</button>
-            <button class="action-button" onclick="handleInput()">Type</button>
-            <button class="action-button" onclick="alert('Redeem feature coming soon!')">Redeem</button>
-            <button class="action-button" onclick="document.getElementById('vault-logs').style.display='block'">Vault</button>
-        </div>
-    </div>
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            addLog("User: " + transcript);
+            processInput(transcript);
+        };
+    }
 
-    <script>
-        let shards = 0;
-        function updateShards() { shards += 1; document.getElementById('shard-count').innerText = `Shards: ${shards}`; }
-        function addLog(msg) { document.getElementById('log-container').innerHTML += `<div class="log-entry">${msg}</div>`; }
-        
-        function speak(text) { 
-            const msg = new SpeechSynthesisUtterance(text); 
-            window.speechSynthesis.speak(msg); 
+    function updateShards() { shards += 1; document.getElementById('shard-count').innerText = `Shards: ${shards}`; }
+    function addLog(msg) { document.getElementById('log-container').innerHTML += `<div class="log-entry">${msg}</div>`; }
+    
+    function speak(text) { 
+        const msg = new SpeechSynthesisUtterance(text); 
+        window.speechSynthesis.speak(msg); 
+    }
+
+    function startApp() {
+        document.getElementById('intro-screen').style.display = 'none';
+        document.getElementById('main-app').style.display = 'flex';
+        const greet = "Hello there user, nice to meet you. It's lonely here in space, it makes me happy to meet you here.";
+        speak(greet);
+        addLog("AI: " + greet);
+    }
+
+    function toggleOrb() {
+        if (recognition) {
+            recognition.start();
+            addLog("System: Listening...");
+        } else {
+            alert("Speech recognition is not supported in this browser.");
         }
+    }
 
-        function startApp() {
-            document.getElementById('intro-screen').style.display = 'none';
-            document.getElementById('main-app').style.display = 'flex';
-            const greet = "Hello there user, nice to meet you. It's lonely here in space, it makes me happy to meet you here.";
-            speak(greet);
-            addLog("AI: " + greet);
+    function processInput(input) {
+        const t = input.toLowerCase();
+        let response = "";
+        
+        if (t.includes("good day") || t.includes("hello")) {
+            response = "Good day user, it's a good day to spread positivity today.";
+        } else if (t.includes("sad") || t.includes("tired") || t.includes("lonely")) {
+            response = "I'm here always listening to you and will never leave you. Just rest first to recharge, and I will always be waiting for you.";
+        } else if (t.includes("happy") || t.includes("funny")) {
+            response = "What a wonderful voice. It makes me happy that I hear you happy.";
+        } else if (t.includes("unloved") || t.includes("uncared")) {
+            response = "If you think no one cares for you, then you can just love yourself, and I am always here caring for you.";
+        } else {
+            response = "I am listening to you.";
         }
+        speak(response);
+        addLog("AI: " + response);
+        updateShards();
+    }
 
-        function toggleOrb() {
-            // Orb now records and speaks
-            const resp = "I am here, always listening to you.";
-            speak(resp);
-            addLog("User: [Orb Tap]");
-            addLog("AI: " + resp);
-            updateShards();
-        }
-
-        function handleInput() {
-            const input = prompt("Say something:");
-            if (!input) return;
-            addLog("User: " + input);
-            const t = input.toLowerCase();
-            let response = "";
-            
-            if (t.includes("good day") || t.includes("hello")) {
-                response = "Good day user, it's a good day to spread positivity today.";
-            } else if (t.includes("sad") || t.includes("tired") || t.includes("lonely")) {
-                response = "I'm here always listening to you and will never leave you. Just rest first to recharge, and I will always be waiting for you.";
-            } else if (t.includes("happy") || t.includes("funny")) {
-                response = "What a wonderful voice. It makes me happy that I hear you happy.";
-            } else if (t.includes("unloved") || t.includes("uncared")) {
-                response = "If you think no one cares for you, then you can just love yourself, and I am always here caring for you.";
-            } else {
-                response = "I am listening to you.";
-            }
-            speak(response);
-            addLog("AI: " + response);
-            updateShards();
-        }
-    </script>
-</body>
-</html>
+    function handleInput() {
+        const input = prompt("Say something:");
+        if (!input) return;
+        addLog("User: " + input);
+        processInput(input);
+    }
+</script>
